@@ -1,0 +1,28 @@
+{
+  "name": "katiegilbertson.com",
+  "version": "1.0.0",
+  "homepage": "http://www.katiegilbertson.com",
+  "authors": [
+    "Tor Gilbertson <sterlingrobot@gmail.com>"
+  ],
+  "description": "Website for filmmaker, editor Katie Lose Gilbertson",
+  "main": "index.php",
+  "keywords": [
+    "filmmaker",
+    "editor",
+    "video production"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "polymer": "Polymer/polymer#~0.5.5"
+  }
+}
