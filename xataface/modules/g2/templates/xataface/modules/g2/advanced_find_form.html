@@ -1,0 +1,93 @@
+<fieldset class="xf-advanced-find-form">
+	<legend>Advanced Search</legend>
+
+	<table class="xf-advanced-find-form-table">
+		<tr>
+		{assign var=counter value=1}
+		{foreach from=$fields item=field key=fkey}
+			{if $field.find.label}
+				{assign var=label value=$field.find.label}
+			{else}
+				{assign var=label value=$field.widget.label}
+			{/if}
+			{if $field.find.type}
+				{assign var=widgetType value=$field.find.type}
+			{else}
+				{assign var=widgetType value=$field.widget.type}
+			{/if}
+			
+			<td><label>{$label|escape}</label>
+				{if $field.vocabulary}
+					<select name="{$fkey|replace:'.':'/'|escape}" class="xf-advanced-find-field xf-advanced-find--{$fkey}" data-xf-vocabulary="{$field.vocabulary|escape}" data-xf-widget-type="{$widgetType|escape}" {if $field.find.type}data-xf-find-widget-type="{$field.find.type|escape}"{/if}>
+					
+					</select>
+				{else}
+					<input type="text" name="{$fkey|replace:'.':'/'|escape}" class="xf-advanced-find-field xf-advanced-find--{$fkey|escape}" data-xf-widget-type="{$widgetType|escape}" {if $field.find.type}data-xf-find-widget-type="{$field.find.type|escape}"{/if}/>
+				{/if}
+				<div class="formHelp">{$field.find.description|escape}</div>
+			</td>
+			{if $counter == 2}
+				</tr>
+				<tr>
+				{assign var=counter value=0}
+			{/if}
+			{assign var=counter value=$counter+1}
+		{/foreach}
+		{if $counter == 2}
+			</tr>
+		{/if}
+	
+	</table>
+	
+	{foreach from=$relatedFields item=rfields key=relationshipLabel}
+		<div class="xf-related-find-form-panel">
+			
+			<h3>{$relationshipLabel|escape}</h3>
+			
+			<table class="xf-advanced-find-form-table">
+				<tr>
+				{assign var=counter value=1}
+				{foreach from=$rfields item=field key=fkey}
+					{if $field.find.label}
+						{assign var=label value=$field.find.label}
+					{else}
+						{assign var=label value=$field.widget.label}
+					{/if}
+					{if $field.find.type}
+						{assign var=widgetType value=$field.find.type}
+					{else}
+						{assign var=widgetType value=$field.widget.type}
+					{/if}
+							<td><label>{$label|escape}</label>
+						{if $field.vocabulary}
+							<select name="{$fkey|replace:'.':'/'|escape}" class="xf-advanced-find-field xf-advanced-find--{$fkey}" data-xf-vocabulary="{$field.vocabulary|escape}" data-xf-widget-type="{$widgetType|escape}" {if $field.find.type}data-xf-find-widget-type="{$field.find.type|escape}"{/if}>
+							
+							</select>
+						{else}
+							<input type="text" name="{$fkey|replace:'.':'/'|escape}" class="xf-advanced-find-field xf-advanced-find--{$fkey|escape}" data-xf-widget-type="{$widgetType|escape}" {if $field.find.type}data-xf-find-widget-type="{$field.find.type|escape}"{/if}/>
+						{/if}
+					</td>
+					{if $counter == 2}
+						</tr>
+						<tr>
+						{assign var=counter value=0}
+					{/if}
+					{assign var=counter value=$counter+1}
+				{/foreach}
+				{if $counter == 2}
+					</tr>
+				{/if}
+			
+			</table>
+		
+		</div>
+		
+	{/foreach}
+	
+	<div class="xf-advanced-find-buttons">
+	
+		<button class="xf-advanced-find-clear">Clear</button>
+		<button class="xf-advanced-find-search">Search</button>
+	</div>
+
+</fieldset>

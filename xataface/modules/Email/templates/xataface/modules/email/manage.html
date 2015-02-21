@@ -1,0 +1,36 @@
+{use_macro file="Dataface_Main_Template.html"}
+	{fill_slot name="main_section"}
+	
+		<h1>Email Management</h1>
+		
+		<div class="portalHelp">
+			<p>This section allows you to manage the email module settings.  You can create email templates or manage your email black lists.</p>
+			
+		</div>
+		<div>[<a href="{$ENV.DATAFACE_SITE_HREF}?-action=manage">Back to Control Panel</a>]</div>
+		
+		<ul>
+			<li>
+				<span class="icon"></span>
+				<span class="title"><a href="{$ENV.DATAFACE_SITE_HREF}?-action=list&-table=xataface__email_newsletters&archive_category=1">View Email History</a></span>
+				<span class="description">Browse through the history of sent emails.</span>
+				
+			</li>
+		
+			<li>
+				<span class="icon"></span>
+				<span class="title"><a href="{$ENV.DATAFACE_SITE_HREF}?-action=list&-table=xataface__email_templates">Manage Templates</a></span>
+				<span class="description">Create templates that you can use to prepopulate emails that you send to your maillists.</span>
+				
+			</li>
+			
+			<li>
+				<span class="icon"></span>
+				<span class="title"><a href="{$ENV.DATAFACE_SITE_HREF}?-action=list&-table=dataface__email_blacklist">Manage Black List</a></span>
+				<span class="description">The <em>Black List</em> is a list of users who have opted out of your maillist.</span>
+			</li>
+		
+		</ul>
+	{/fill_slot}
+
+{/use_macro}

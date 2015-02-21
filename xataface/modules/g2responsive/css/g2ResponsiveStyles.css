@@ -1,0 +1,104 @@
+/*Style xf2 stuff*/
+#xf-logo {
+  background-image: url(img/blanklogo.png);
+	height: 75px;
+}
+
+/*Search*/
+.search_form {
+  margin: 14px 0px 14px 14px;
+}
+
+/*Large buttons which appear at the top on mobile*/
+.left_column_mobile_move ul li a {
+  font-weight: bolder;
+  font-size: 1.5em;
+  height: 5em;
+  line-height: 4.7em;
+  min-width: 150px;
+  background-size: cover;
+  border-style: solid;
+  border-width: 0.15em;
+  background-color: #ECC8A3;
+}
+
+.left_column_mobile_move ul li {
+  display: inline-block;
+  list-style: none;
+  *display:inline;
+}
+
+/*Mobile view*/
+@media (max-width: 805px){
+
+    /*DO NOT DISPLAY*/
+    .listing > tbody > tr >  td,
+    .listing > tbody > tr >  th,
+    .listing > thead > tr >  td,
+    .listing > thead > tr >  th,
+    #left_column,
+    #top-section,
+    .xf-show-advanced-find,
+    .horizontalDivider{
+        display: none!important;
+    }
+    
+    /*DO DISPLAY*/
+    .listing > tbody > tr >  td:first-child,
+    .listing > tbody > tr >  th:first-child,
+    .listing > thead > tr >  td:first-child,
+    .listing > thead > tr >  th:first-child,
+    .listing > tbody > tr >  td:nth-child(3),
+    .listing > tbody > tr >  th:nth-child(3),
+    .listing > thead > tr >  td:nth-child(3),
+    .listing > thead > tr >  th:nth-child(3){
+        display: table-cell!important;
+    }
+    
+    /*Increase font size of table entries*/
+    tr.listing {
+        font-size: 150%;
+    }
+    
+    /*Navbar font/button styles*/
+    #top-menu-bar ul li a{
+        padding: 15px 15px 20px 15px;
+        font: 20px/27px Arial,sans-serif;
+    }
+    
+    /*Navbar dropdown font styles*/
+    .action-sub-menu li a span{
+        font: 16px/27px Arial,sans-serif;
+    }
+}
+
+/*Desktop view*/
+@media (min-width: 806px){
+
+    /*DO NOT DISPLAY*/
+    #table-actions-returnall,
+    .left_column_mobile_move,
+    #bottom-section{
+        display: none!important;
+    }
+    
+    /*Navbar font/button styles*/
+    #top-menu-bar ul li a{
+        padding: 5px 3px 5px 3px;
+        font: 15px/22px Arial,sans-serif;
+    }
+    
+    /*Navbar dropdown font styles*/
+    .action-sub-menu li a span{
+        font: 15px/22px Arial,sans-serif;
+    }
+    
+    /*Overwriting bootstrap styles to display default g2 styles*/
+    body{
+        font: 13px/27px Arial,sans-serif;
+    }
+    
+    a{
+        color: #436976;
+    }
+}

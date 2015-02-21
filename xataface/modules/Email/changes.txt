@@ -1,0 +1,19 @@
+0.3 3312
+February 16, 2012
+
+	- Added support for email attachments.
+	- Now requires the ajax upload widget for email attachments.
+	
+	
+0.2 1000
+December 10, 2011
+
+	- Complete rewrite.  No longer requires a cron script.
+	- Now allows management of email history and black list.
+	- New opt-in/opt-out screens.
+	- Now requires the ckeditor widget for the email bodies.
+
+0.1 982
+February 17, 2009
+
+	- Initial release

@@ -1,0 +1,38 @@
+.listing > tbody > tr >  td:nth-child(2),
+.listing > tbody > tr >  th:nth-child(2),
+.listing > thead > tr >  td:nth-child(2),
+.listing > thead > tr >  th:nth-child(2),
+.listing > tbody > tr >  td:nth-child(5),
+.listing > tbody > tr >  th:nth-child(5),
+.listing > thead > tr >  td:nth-child(5),
+.listing > thead > tr >  th:nth-child(5),
+.listing > tbody > tr >  td:nth-child(6),
+.listing > tbody > tr >  th:nth-child(6),
+.listing > thead > tr >  td:nth-child(6),
+.listing > thead > tr >  th:nth-child(6),
+.listing > tbody > tr >  td:nth-child(7),
+.listing > tbody > tr >  th:nth-child(7),
+.listing > thead > tr >  td:nth-child(7),
+.listing > thead > tr >  th:nth-child(7),
+.listing > tbody > tr >  td:last-child,
+.listing > tbody > tr >  th:last-child,
+.listing > thead > tr >  td:last-child,
+.listing > thead > tr >  th:last-child,
+#main_table > tbody > tr > td > div > div:nth-child(2) > ul > li:last-child,
+.left_column_mobile_move,
+.mobile_hide2{
+    display: none!important;
+}
+.listing > tbody > tr >  td:nth-child(3),
+.listing > tbody > tr >  th:nth-child(3),
+.listing > thead > tr >  td:nth-child(3),
+.listing > thead > tr >  th:nth-child(3){
+    display: table-cell!important;
+}
+#top-menu-bar ul li a{
+    padding: 5px 3px 5px 3px;
+    font: 15px/22px Arial,sans-serif;
+}
+.action-sub-menu li a span{
+    font: 15px/22px Arial,sans-serif;
+}

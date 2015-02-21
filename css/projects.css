@@ -1,0 +1,221 @@
+/*
+    Document   : projects
+    Created on : Feb 12, 2013, 1:34:52 PM
+    Author     : Tor
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root {
+    display: block;
+}
+
+.project_item, .project_item h2, .project_item h3, .project_item p {
+    text-align: left;
+}
+.project_item {
+    margin-bottom: 1em;
+}
+
+.project_item h3, .project_item h2 {
+    margin-bottom: 0;
+    font-weight: normal;
+    border-bottom: 1px solid chartreuse;
+}
+.project_item h2 {
+    font-size: 1.2em;
+    color: honeydew;
+    width: 100%;
+}
+.project_item p {
+    margin-top: 0.5em;
+    margin-left: 11em;
+    text-indent: 2em;
+    font-size: 0.8em;
+}
+
+.project_item span.role {
+    margin: 0;
+    font: 0.6em Monaco, Consolas, monospace;
+    color: chartreuse;
+    font-weight: 100;
+}
+
+.project_item span.employer {
+    color: darkgreen;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.project_item span.status {
+    margin: 0 2em 0 0.5em;
+    color: #CCC;
+    font: 0.6em Monaco, Consolas, monospace;
+}
+.project_item img.image, .project_item h2 {
+    cursor: pointer;
+}
+.project_item img.image {
+    margin: 1em;
+    padding: 0.2em;
+    float: left;
+    width: 8em;
+    height: 8em;
+    border-radius: 1em;
+    background: rgba(255,255,255,0.3);
+}
+.project_item img.image:hover {
+    background: rgba(127, 255, 0,0.3);
+}
+.project_item h2:hover {
+    color: rgb(127, 255, 0);
+}
+.subproject_item {
+    display: inline;
+}
+.subproject_item img {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0.2em;
+    background: rgba(255,255,255,0.3);
+    border-radius: 0.5em;
+}
+.subproject_item img:hover {
+    background: rgba(127, 255, 0,0.3);
+}
+p.subproject_desc {
+    width: 95%;
+    margin-left: 0;
+}
+a.subproject {
+    display: inline-block;
+    margin: 0.2em;
+    background: rgba(255,255,255,0.3);
+    border-radius: 0.5em;
+}
+.project_item div.data {
+    text-align: left;
+}
+.project_video {
+    width: 500px;
+    position: relative;
+    text-align: left;
+    overflow: hidden !important;
+}
+.project_slideshow {
+    margin-left: 11em;
+    width: 500px;
+    overflow: hidden !important;
+}
+.project_slideshow img {
+    border-radius: 2em;
+}
+.project_item img.corner {
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 1000;
+    background: none;
+    border-radius: 0;
+}
+.left {
+    left: 0px;
+}
+.right {
+    right: 0px;
+}
+.top {
+    top: 0px;
+}
+.bottom {
+    bottom: 0px;
+}
+.project_item.award {
+    font-size: 90%;
+    width: 50%;
+    margin: 2em auto;
+}
+.project_item.award h2 {
+    margin-bottom: 1em;
+}
+.project_item.award .provider {
+    margin-left: 2em;
+    color: darkgreen;
+}
+.project_item.award {
+    color: honeydew;
+}
+.project_desc {
+    font-size: 16pt;
+    width: 80%;
+    margin-top: 1em;
+}
+.awards {
+    width: 180px;
+    float: right;
+    margin: 0 20px 0 0;
+}
+.awards.list {
+    width: 80%;
+    margin: 2em;
+}
+.awards .award {
+    min-height: 60px;
+    background: url('http://www.katiegilbertson.com/images/laurel.png') no-repeat center 15px;
+}
+.awards .award.float {
+    width: 160px;
+    height: 90px;
+    margin: 0.5em 2em;
+    float: left;
+}
+.award.laurel h4 {
+    font-size: 0.9em;
+    color: honeydew;
+    margin: 0;
+}
+.award.laurel p {
+    width: 100%;
+    font: 0.8em Monaco, Consolas, monospace;
+    color: chartreuse;
+    margin: 0 auto;
+    text-align: center;
+    text-indent: 0;
+}
+.subproject_item.resource {
+    float: right;
+    width: 90px;
+    margin-left: 30px;
+}
+h4.press {
+    float: right;
+    margin-left: 40%;
+    margin-bottom: 0;
+    font-weight: lighter;
+    font-size: 150%;
+    color: honeydew;
+    text-align: right;
+    width: 60%;
+    border-bottom: 1px dotted chartreuse;
+}
+h4.related {
+    float: none;
+    margin-left: 0;
+    font-size: 120%;
+    text-align: left;
+}
+.related-work {
+    width: 15%;
+    float: left;
+}
+.subproject_item.resource img {
+    width: 70px;
+    height: 120px;
+}
+.subproject_item.resource span {
+    font-size: 80%;
+    color: honeydew;
+}

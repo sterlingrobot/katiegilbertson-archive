@@ -1,0 +1,11 @@
+{use_macro file="bootstrap/top/main.html"}
+	{fill_slot name="html_body"}
+		<div class="navbar navbar-inverse">
+			<div class="navbar-inner">
+				{define_slot name="bootstrap_fluid_navbar"}{/define_slot}
+			</div>
+		</div>
+		
+		{include file="bootstrap/layout/fluid.html"}		
+	{/fill_slot}
+{/use_macro}

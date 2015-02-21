@@ -1,0 +1,30 @@
+.listing > tbody > tr >  td,
+.listing > tbody > tr >  th,
+.listing > thead > tr >  td,
+.listing > thead > tr >  th,
+#main_table > tbody > tr > td:first-child,
+#top-section,
+.xf-show-advanced-find,
+.horizontalDivider{
+    display: none!important;
+}
+.listing > tbody > tr >  td:first-child,
+.listing > tbody > tr >  th:first-child,
+.listing > thead > tr >  td:first-child,
+.listing > thead > tr >  th:first-child,
+.listing > tbody > tr >  td:nth-child(3),
+.listing > tbody > tr >  th:nth-child(3),
+.listing > thead > tr >  td:nth-child(3),
+.listing > thead > tr >  th:nth-child(3){
+    display: table-cell!important;
+}
+tr.listing {
+    font-size: 150%;
+}
+#top-menu-bar ul li a{
+    padding: 15px 15px 20px 15px;
+    font: 20px/27px Arial,sans-serif;
+}
+.action-sub-menu li a span{
+    font: 16px/27px Arial,sans-serif;
+}

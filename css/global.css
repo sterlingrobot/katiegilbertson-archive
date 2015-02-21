@@ -1,0 +1,162 @@
+/*
+    Document   : global
+    Created on : Feb 8, 2013, 10:58:17 AM
+    Author     : Tor
+    Description:
+        Global Stylesheet with CSS reset, loaded by all pages.
+*/
+
+/* ----------------------------
+simple CSS reset
+---------------------------- */
+
+html, body, ul, ol, li, form, fieldset, legend
+{
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p { margin-top: 0; }
+
+a, a:link, a:visited { color: #000; text-decoration: none; }
+
+a:hover { color: chartreuse; cursor: pointer; }
+
+fieldset,img { border: 0; }
+
+legend { color: #000; }
+
+li { list-style: none; }
+
+sup { vertical-align: text-top; }
+
+sub { vertical-align: text-bottom; }
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+caption, th, td {
+	text-align: left;
+	vertical-align: top;
+	font-weight: normal;
+}
+
+input, textarea, select {
+	font-size: 110%;
+	line-height: 1.1;
+}
+
+abbr, acronym {
+	border-bottom: .1em dotted;
+	cursor: help;
+}
+/*----END STYLE RESET---*/
+
+* {
+        font-family: Tahoma, Geneva, sans-serif;
+        text-align: center;
+}
+body {
+        background-color: #66AD52;
+}
+pre {
+    font: 0.6em monospace;
+    text-align: left;
+}
+p {
+    font-size: 0.8em;
+}
+p, p em, p strong {
+    width: 60%;
+    margin: 1em auto;
+    font-family: Georgia, Times, serif;
+    color: rgb(26, 44, 20);
+}
+span.ellipsis_text {
+    font-family: Georgia, Times, serif;
+}
+.clearfloat {
+    height: 1px;
+    clear: both;
+}
+#wrapper { margin: 2em 0; }
+h1 {
+    width: 15em;
+    padding-bottom: 2em;
+    margin: 2em auto 2em;
+    position: relative;
+    font-weight: normal;
+    font-size: 2em;
+    color: #1A2C14;
+    text-transform: lowercase;
+    border-bottom: 1px solid chartreuse;
+}
+#social_links {
+    float: right;
+}
+#bkImage {
+    opacity: 0.6;
+    z-index: -10;
+    position: absolute;
+    top: -3em;
+    right: 0;
+}
+#bkImage img {
+    border-top-right-radius: 3em;
+    border-top-left-radius: 3em;
+    border-bottom-left-radius: 3em;
+}
+#title {
+    position: absolute;
+    left: 0;
+    bottom: -0.6em;
+    text-align: center;
+    font: 0.8em Geneva, sans-serif;
+    font-weight: lighter;
+    color: rgba(26, 44, 20, 0.7);
+    width: 100%;
+
+}
+#title strong {
+    font-family: Geneva, sans-serif;
+    color: rgba(26, 44, 20, 1);
+}
+#content {
+    padding: 2em;
+    margin: 1em 2em 0 12em;
+    border-radius: 3em;
+    background: rgba(255,255,255,0.1);
+    min-height: 30em;
+    min-width: 30em;
+    position: relative;
+    overflow: hidden;
+}
+#qualities {
+    padding: 1em;
+    margin-bottom: 3em;
+}
+span.fadein {
+    margin: 0 3em 2em;
+    color: chartreuse;
+    font-family: Monaco, Consolas, monospace;
+    text-align: center;
+}
+#backbtn a {
+    width: 50px;
+    height: 36px;
+    display: block;
+    overflow: hidden !important;
+    background: url('images/arrow-back.png') top left no-repeat;
+}
+#backbtn a:hover {
+    background: url('images/arrow-back.png') top right no-repeat;
+}
+.footer a {
+    color: #1A2C14;
+    font-family: Monaco, Consolas, monospace;
+}
+.footer a:hover {
+    color: chartreuse;
+}
