@@ -1,7 +1,10 @@
 # Use PHP5 Single php.ini as default
 AddHandler application/x-httpd-php5s .php
 
+Options +FollowSymLinks
+
 Redirect 301 /index.html /index.php
 
 RewriteEngine On
-RewriteRule  ^p/?.*/([0-9]+)$  /projects.php?id=$1 [NC,L]
+RewriteRule  ^p/.*?/([0-9]+)$ /projects.php?id=$1 [NC,L]
+RewriteRule  ^javascript/(.*?)$ /js/$1 [R=301,NC,L]

@@ -1,5 +1,5 @@
-<?php
-    require_once('configure.php');
+    <?php
+    require_once('/includes/configure.php');
     require_once('function.resize.php');
     $project_id = $_GET['id'];
     mysql_connect(DB_HOST, DB_USERNAME, DB_PASSWORD);
