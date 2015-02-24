@@ -2634,10 +2634,8 @@ div.mainArea {
 .resultlist-filters {
 	font-size: 12px;
 }
-
-
 #xf-logo {
-	background-image: url(/img/CTD_initials.png);
+	/*background-image: url(/img/CTD_initials.png);*/
 	background-repeat: no-repeat;
 	width: 147px;
 	height: 51px;
@@ -2645,7 +2643,6 @@ div.mainArea {
 	margin:0;
 
 }
-
 #xf-logo span {
 	display:none;
 }
