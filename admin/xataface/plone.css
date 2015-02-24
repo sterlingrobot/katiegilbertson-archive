@@ -274,7 +274,7 @@ del {
 /* Logo properties */
 
 #portal-logo {
-    background: url(/img/CTD_initials.png) no-repeat;
+    /*background: url(/img/CTD_initials.png) no-repeat;*/
     border: 0;
     margin: 0.75em 0em 0.75em 1.5em;
     padding: 0;
