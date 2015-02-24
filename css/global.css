@@ -55,11 +55,11 @@ abbr, acronym {
 /*----END STYLE RESET---*/
 
 * {
-        font-family: Tahoma, Geneva, sans-serif;
-        text-align: center;
+    font-family: Tahoma, Geneva, sans-serif;
+    text-align: center;
 }
 body {
-        background-color: #66AD52;
+    background-color: #66AD52;
 }
 pre {
     font: 0.6em monospace;
@@ -69,9 +69,9 @@ p {
     font-size: 0.8em;
 }
 p, p em, p strong {
-    width: 60%;
+    /*width: 60%;*/
     margin: 1em auto;
-    font-family: Georgia, Times, serif;
+    /*font-family: Georgia, Times, serif;*/
     color: rgb(26, 44, 20);
 }
 span.ellipsis_text {

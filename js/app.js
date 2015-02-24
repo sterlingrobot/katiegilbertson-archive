@@ -2,7 +2,8 @@
 (function() {
   angular.module('klgApp', ['ngMaterial'])
   	.config(ThemeProvider)
-  	.filter('seoURL', seoURL)
+    .filter('seoURL', seoURL)
+    .filter('truncate', truncate)
     .controller('AppController', ['$mdSidenav', AppController]);
 
   function AppController($mdSidenav){
@@ -38,4 +39,36 @@
       return input.toLowerCase();
     }
   }
+
+  function truncate() {
+
+    return function(input) {
+
+      var settings = {
+          size: 180,
+          omission: '...',
+          ignore: true
+        },
+        textTruncated,
+        regex    = /[!-\/:-@\[-`{-~]$/;
+
+      if (input.length > settings.size) {
+        textTruncated = input.trim()
+                .substring(0, settings.size)
+                .split(' ')
+                .slice(0, -1)
+                .join(' ');
+
+        if (settings.ignore) {
+          textTruncated = textTruncated.replace(regex, '');
+        }
+
+        return textTruncated + settings.omission;
+      } else {
+        return input;
+      }
+    }
+  }
+
+
 })();
