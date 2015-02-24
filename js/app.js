@@ -1,8 +1,25 @@
 'use strict';
 (function() {
-  angular.module('klgApp', ['ngMaterial', 'ngAnimate', 'ngAria'])
+  angular.module('klgApp', ['ngMaterial'])
   	.config(ThemeProvider)
-  	.filter('seoURL', seoURL);
+  	.filter('seoURL', seoURL)
+    .controller('AppController', ['$mdSidenav', AppController]);
+
+  function AppController($mdSidenav){
+    var app = this;
+
+    app.menu = [
+      { title: 'home', url: '/' },
+      { title: 'projects', url: '/projects.php' },
+      { title: 'awards', url: '/awards.php' },
+      { title: 'about', url: '/about.php' },
+      { title: 'contact', url: '/contact.php' }
+    ];
+    app.toggleSidenav = function(menuId) {
+      console.log('click');
+      $mdSidenav(menuId).toggle();
+    };
+  }
 
   function ThemeProvider($mdThemingProvider) {
     $mdThemingProvider.theme('default')

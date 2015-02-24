@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	        <link href="/vendor/angular-material/angular-material.css" rel="stylesheet">
+
+</head>
+<body>
+<md-grid-list md-cols="3" md-cols-md="4" md-cols-gt-md="8" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px" md-on-layout="console.log('layout')">
+
+               <md-grid-tile ng-click="projects.setCurrProject(project);">
+                    <md-content class="md-default-theme">
+                        <a href="/p/indian-relay/editor/1">
+                            <img class="image" ng-src="/images/projects/Indian_Relay/main.jpg" width="120" src="/images/projects/Indian_Relay/main.jpg">
+                        </a>
+
+                        <a href="/p/indian-relay/editor/1">
+                            <h2 class="ng-binding">Indian Relay
+                                <span class="status ng-binding">( 2012 )</span><br>
+                                <span class="role ng-binding">Editor</span>
+                            </h2>
+                        </a>
+
+                        <span class="employer ng-binding">For DyeWorks ProductionsFunded by: ITVS, MontanaPBS, Native American Public Telecomunications</span>
+
+                        <div class="awards synopsis" cycle-slides="">
+                            <!-- ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Western Writers of America</h4>
+                                <p class="awardname ng-binding">Spur Award, Documentary Script</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">NATAS Northwest</h4>
+                                <p class="awardname ng-binding">EMMY Winner, Photographer - Program</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">NATAS Northwest</h4>
+                                <p class="awardname ng-binding">EMMY Winner, Documentary - Cultural</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">NATAS Northwest</h4>
+                                <p class="awardname ng-binding">EMMY Nominee, Editor - Program</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">NATAS Northwest</h4>
+                                <p class="awardname ng-binding">EMMY Nominee, Director - Post Production</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">PBS | Independent Lens</h4>
+                                <p class="awardname ng-binding">Broadcast Date : November 18, 2013</p>
+                            </div><!-- end ngRepeat: award in project.awards -->
+                        </div>
+
+                        <div id="project_id_1_data" class="data" style="display: none; margin-top: 1em;"> </div>
+
+                        <!-- ngRepeat: subproject in project.subprojects -->
+
+                        <div class="project_desc">
+                            <p class="ng-binding">INDIAN RELAY is an inspiring portrait of three American Indian families as they prepare for and compete in one of the most exciting and dangerous forms of horse-racing practiced anywhere in the world today: Indian Relay. This story builds in intensity as preparations in the cold off-season give way to the high-risk summer races where ambulances are on standby. The film culminates at the National Championships while we hold our breath for one of our teams to walk away the winner. INDIAN RELAY is the story of what every championship-winning Indian Relay team must have: passion, discipline, horsemanship, guts, great horses, and most importantly: family.&lt;/p&gt;
+&lt;p&gt;
+	&lt;strong&gt;UPDATE June 07, 2014:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;
+		INDIAN RELAY wins an EMMY&amp;reg; Award at NATAS Northwest for&amp;nbsp;&lt;strong&gt;Documentary - Cultural&lt;/strong&gt;&lt;/li&gt;
+	&lt;li&gt;
+		INDIAN RELAY wins an EMMY&amp;reg; Award at NATAS Northwest for&amp;nbsp;&lt;strong&gt;Photographer - Program&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</p>
+                        </div>
+
+                        <md-grid-tile-footer>
+                            <div class="social_links">
+                                <!-- ngRepeat: link in project.social_links.split('\n') --><a href="//www.facebook.com/pages/Indian-Relay-on-PBS/224642234216029" target="_blank" ng-repeat="link in project.social_links.split('\n')" class="ng-scope">
+                                        <img src="/images/f_logo_36px.png" width="36" height="36" alt="Visit Facebook Page">
+                                </a><!-- end ngRepeat: link in project.social_links.split('\n') -->
+                            </div>
+                        </md-grid-tile-footer>
+                    </md-content>
+                </md-grid-tile><!-- end ngRepeat: project in projects.projects --><md-grid-tile ng-repeat="project in projects.projects" ng-click="projects.setCurrProject(project);" class="ng-scope" tabindex="0">
+                    <md-content class="md-default-theme">
+                        <a href="/p/stories-of-trust/series-co-director/3">
+                            <img class="image" ng-src="/images/projects/TRUST/main.jpg" width="120" src="/images/projects/TRUST/main.jpg">
+                        </a>
+
+                        <a href="/p/stories-of-trust/series-co-director/3">
+                            <h2 class="ng-binding">Stories of TRUST
+                                <span class="status ng-binding">( 2012 )</span><br>
+                                <span class="role ng-binding">Series Co-director</span>
+                            </h2>
+                        </a>
+
+                        <span class="employer ng-binding">For Our Children'sTrust, The iMatter Campaign, WITNESS</span>
+
+                        <div class="awards synopsis" cycle-slides="">
+                            <!-- ngRepeat: award in project.awards --><div class="award laurel slide ng-scope hasimage" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="images/projects/TRUST/awards/Wildscreen2012_pandaawardswinner.png" height="1" src="images/projects/TRUST/awards/Wildscreen2012_pandaawardswinner.png">
+                                <h4 class="provider ng-binding">Wildscreen</h4>
+                                <p class="awardname ng-binding">Panda Awards Winner</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">KTOO, 360 North Television</h4>
+                                <p class="awardname ng-binding">Broadcast</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope hasimage" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="images/projects/TRUST/awards/IWFF2012_bestofcategory-nonbroadcast.png" height="1" src="images/projects/TRUST/awards/IWFF2012_bestofcategory-nonbroadcast.png">
+                                <h4 class="provider ng-binding">International Wildlife Film Festival</h4>
+                                <p class="awardname ng-binding">Best Non-Broadcast</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope hasimage" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="images/projects/TRUST/awards/IWFF2012_bestmadeinmontana.png" height="1" src="images/projects/TRUST/awards/IWFF2012_bestmadeinmontana.png">
+                                <h4 class="provider ng-binding">International Wildlife Film Festival</h4>
+                                <p class="awardname ng-binding">Best Made in Montana</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Element Film Festival</h4>
+                                <p class="awardname ng-binding">Audience Award</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">MYHERO International Film Festival</h4>
+                                <p class="awardname ng-binding">2nd place: Series Hero</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">MYHERO International Film Festival</h4>
+                                <p class="awardname ng-binding">2nd place: Community Hero</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope hasimage" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="images/projects/TRUST/awards/MFTelluride2012_officialselection.png" height="1" src="images/projects/TRUST/awards/MFTelluride2012_officialselection.png">
+                                <h4 class="provider ng-binding">Telluride Mountainfilm</h4>
+                                <p class="awardname ng-binding"> Moving Mountains Award</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">International Wildlife Film Festival</h4>
+                                <p class="awardname ng-binding"> Honorable Mention in Conservation Message</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">International Wildlife Film Festival</h4>
+                                <p class="awardname ng-binding"> Honorable Mention in Cinematography</p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Wild &amp; Scenic Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Los Angeles Green Festival </h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Wild &amp; Scenic Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">San Francisco Green Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Peace on Earth Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Amnesty International Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">One Earth Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">One Earth Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">One Earth Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">One Earth Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards --><div class="award laurel slide ng-scope" ng-repeat="award in project.awards" ng-class="{ 'hasimage' : award.laurel_image }">
+                                    <img ng-src="/css/images/1px_spacer.gif" height="1" src="/css/images/1px_spacer.gif">
+                                <h4 class="provider ng-binding">Hawaii Human Rights Film Festival</h4>
+                                <p class="awardname ng-binding"></p>
+                            </div><!-- end ngRepeat: award in project.awards -->
+                        </div>
+
+                        <div id="project_id_3_data" class="data" style="display: none; margin-top: 1em;"> </div>
+
+                        <!-- ngRepeat: subproject in project.subprojects -->
+
+                        <div class="project_desc">
+                            <p class="ng-binding">This multi-award winning 10-part series of short documentaries is the perfect trifecta of youth, law, and justice. The series features the voices of daring youth from across the country who are going to court to compel the government to protect our atmosphere, in trust, for future generations. The Trust Campaign is a joint effort between Our Children'sTrust, the iMatter Campaign, and WITNESS.
+
+Through these stories we see into the lives of youth who are taking the issue of climate change and atmospheric protection to the courts to have it protected under The Public Trust Doctrine.</p>
+                        </div>
+
+                        <md-grid-tile-footer>
+                            <div class="social_links">
+                                <!-- ngRepeat: link in project.social_links.split('\n') -->
+                            </div>
+                        </md-grid-tile-footer>
+                    </md-content>
+                </md-grid-tile><!-- end ngRepeat: project in projects.projects --><md-grid-tile ng-repeat="project in projects.projects" ng-click="projects.setCurrProject(project);" class="ng-scope" tabindex="0">
+                    <md-content class="md-default-theme">
+                        <a href="/p/inches-of-snow-and-tide-climate-change-in-the-interconnected-landscapes-of-olympic-national-park/co-editor/8">
+                            <img class="image" ng-src="/images/projects/Inches_of_Snow/main.jpg" width="120" src="/images/projects/Inches_of_Snow/main.jpg">
+                        </a>
+
+                        <a href="/p/inches-of-snow-and-tide-climate-change-in-the-interconnected-landscapes-of-olympic-national-park/co-editor/8">
+                            <h2 class="ng-binding">Inches of Snow and Tide: Climate Change in the Interconnected Landscapes of Olympic National Park
+                                <span class="status ng-binding">( 2010 )</span><br>
+                                <span class="role ng-binding">Co-editor</span>
+                            </h2>
+                        </a>
+
+                        <span class="employer ng-binding">For Olympic National Park by Open Boat Films</span>
+
+                        <div class="awards synopsis" cycle-slides="">
+                            <!-- ngRepeat: award in project.awards -->
+                        </div>
+
+                        <div id="project_id_8_data" class="data" style="display: none; margin-top: 1em;"> </div>
+
+                        <!-- ngRepeat: subproject in project.subprojects -->
+
+                        <div class="project_desc">
+                            <p class="ng-binding">It's not the change of climate change that is the issue, it's the rate of the change.
+The Olympic Peninsula is a tough, diverse, and colorful ecosystem to call home. Meet passionate, quirky, and personable scientists at Olympic National Park as they divulge the secret life of coastal and mountain ecosystems with viewers. Explore tide pools in the intertidal zone with ecologist Steve Fradkin as he introduces us to Purple Urchins, 80-year old Giant Green Anemones, and the icon of the Pacific Northwest, the Sea Star. Learn how snowmelt in the mountains induces sea level rise and how it will change the composition, diversity, and food sources of the coastal inhabitants. Come away fascinated with macro-algae, mussels, clams, and snow-pack.</p>
+                        </div>
+
+                        <md-grid-tile-footer>
+                            <div class="social_links">
+                                <!-- ngRepeat: link in project.social_links.split('\n') -->
+                            </div>
+                        </md-grid-tile-footer>
+                    </md-content>
+                </md-grid-tile><!-- end ngRepeat: project in projects.projects --><md-grid-tile ng-repeat="project in projects.projects" ng-click="projects.setCurrProject(project);" class="ng-scope" tabindex="0">
+                    <md-content class="md-default-theme">
+                        <a href="/p/fundraising/branding-video/editor/17">
+                            <img class="image" ng-src="/images/projects/WSE/main.jpg" width="120" src="/images/projects/WSE/main.jpg">
+                        </a>
+
+                        <a href="/p/fundraising/branding-video/editor/17">
+                            <h2 class="ng-binding">Fundraising/Branding Video
+                                <span class="status ng-binding">( 2014 )</span><br>
+                                <span class="role ng-binding">Editor</span>
+                            </h2>
+                        </a>
+
+                        <span class="employer ng-binding">For Western Sustainability Exchange</span>
+
+                        <div class="awards synopsis" cycle-slides="">
+                            <!-- ngRepeat: award in project.awards -->
+                        </div>
+
+                        <div id="project_id_17_data" class="data" style="display: none; margin-top: 1em;"> </div>
+
+                        <!-- ngRepeat: subproject in project.subprojects -->
+
+                        <div class="project_desc">
+                            <p class="ng-binding">Western Sustainability Exchange was founded in 1994 on the principles of preserving the abundance of the Northern Rockies including its open spaces, wildlife habitats, water resources, rural communities, and agricultural land and heritage. Today, WSE boasts numerous successes in bringing together concerned parties who are committed to the future of Montana. The organization has aided farmers and ranchers in designing and implementing innovative and sustainable production strategies, developed value-added markets for these producers, and educated thousands of consumers about the long-term benefits of sustainable purchasing. </p>
+                        </div>
+
+                        <md-grid-tile-footer>
+                            <div class="social_links">
+                                <!-- ngRepeat: link in project.social_links.split('\n') -->
+                            </div>
+                        </md-grid-tile-footer>
+                    </md-content>
+                </md-grid-tile><!-- end ngRepeat: project in projects.projects --><md-grid-tile ng-repeat="project in projects.projects" ng-click="projects.setCurrProject(project);" class="ng-scope" tabindex="0">
+                    <md-content class="md-default-theme">
+                        <a href="/p/corporate-branding-videos/editor/16">
+                            <img class="image" ng-src="/images/projects/LaCense/main.jpg" width="120" src="/images/projects/LaCense/main.jpg">
+                        </a>
+
+                        <a href="/p/corporate-branding-videos/editor/16">
+                            <h2 class="ng-binding">Corporate Branding Videos
+                                <span class="status ng-binding">( 2014 )</span><br>
+                                <span class="role ng-binding">Editor</span>
+                            </h2>
+                        </a>
+
+                        <span class="employer ng-binding">For La Cense Montana</span>
+
+                        <div class="awards synopsis" cycle-slides="">
+                            <!-- ngRepeat: award in project.awards -->
+                        </div>
+
+                        <div id="project_id_16_data" class="data" style="display: none; margin-top: 1em;"> </div>
+
+                        <!-- ngRepeat: subproject in project.subprojects -->
+
+                        <div class="project_desc">
+                            <p class="ng-binding">La Cense Montana is an 88,000 acre horse training and working cattle ranch, focused on developing premium recreational quarter horses and breeding top-grade Black Angus cattle through the principles of natural ranching.
+</p>
+                        </div>
+
+                        <md-grid-tile-footer>
+                            <div class="social_links">
+                                <!-- ngRepeat: link in project.social_links.split('\n') -->
+                            </div>
+                        </md-grid-tile-footer>
+                    </md-content>
+                </md-grid-tile><!-- end ngRepeat: project in projects.projects --><md-grid-tile ng-repeat="project in projects.projects" ng-click="projects.setCurrProject(project);" class="ng-scope" tabindex="0">
+                    <md-content class="md-default-theme">
+                        <a href="/p/an-americans-guide-to-breastfeeding/writer/director/editor/2">
+                            <img class="image" ng-src="/images/projects/AGB/main.jpg" width="120" src="/images/projects/AGB/main.jpg">
+                        </a>
+
+                        <a href="/p/an-americans-guide-to-breastfeeding/writer/director/editor/2">
+                            <h2 class="ng-binding">An American's Guide to Breastfeeding
+                                <span class="status ng-binding">( Post-production )</span><br>
+                                <span class="role ng-binding">Writer/Director/Editor</span>
+                            </h2>
+                        </a>
+
+                        <span class="employer ng-binding"></span>
+
+                        <div class="awards synopsis" cycle-slides="">
+                            <!-- ngRepeat: award in project.awards -->
+                        </div>
+
+                        <div id="project_id_2_data" class="data" style="display: none; margin-top: 1em;"> </div>
+
+                        <!-- ngRepeat: subproject in project.subprojects -->
+
+                        <div class="project_desc">
+                            <p class="ng-binding">A satirical critique of Americans' simultaneous prudishness and obsession with sex takes aim at how that obsession affects breastfeeding women and generates society's myths about breastfeeding. By blending satire and documentary into a new style of creative non-fiction, An American's Guide to Breastfeeding links breastfeeding to terrorism, economic woes, and sexual dysfunction.</p>
+                        </div>
+
+                        <md-grid-tile-footer>
+                            <div class="social_links">
+                                <!-- ngRepeat: link in project.social_links.split('\n') -->
+                            </div>
+                        </md-grid-tile-footer>
+                    </md-content>
+                </md-grid-tile><!-- end ngRepeat: project in projects.projects -->
+            </md-grid-list>
+                    <script src="vendor/angular/angular.js"></script>
+        <script src="vendor/angular-material/angular-material.min.js"></script>
+        <script src="vendor/angular-animate/angular-animate.min.js"></script>
+        <script src="vendor/angular-aria/angular-aria.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+
+</body>
+</html>
