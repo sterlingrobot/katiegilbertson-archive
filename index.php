@@ -21,7 +21,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="description" content="Katie Lose Gilbertson is an award winning Documentary Filmmaker and Video Editor in Bozeman, specializing in Documentary Editing and Story Consulting & Development">
-	<title>Professional Video Editor | Documentary Film | Writing Consultant</title>
+	    <title>Professional Video Editor | Documentary Film | Writing Consultant</title>
         <link href="/css/global.css" rel="stylesheet" type="text/css" />
         <link href="/css/menu.css" rel="stylesheet" type="text/css" />
         <link href="/css/projects.css" rel="stylesheet" type="text/css" />
@@ -92,7 +92,7 @@
                     <img src="/images/profile.jpg" border="0" alt="Professional Video Editor | Documentary Film | Writing Consultant" />
                 </div>
                 <section>
-                    <h1 class="fadein">Katie Lose Gilbertson<span id="title"><strong>Story Arc</strong>itech</span></h1>
+                    <h1 class="fadein">Katie Lose Gilbertson <span id="title"><strong>Story Arc</strong>itech</span></h1>
                     <div id="qualities">
                         <span class="fadein">Story</span>
                         <span class="fadein">Connection</span>

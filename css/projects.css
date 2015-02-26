@@ -26,12 +26,18 @@ root {
     font-size: 1.2em;
     color: honeydew;
     width: 100%;
+    line-height: 0.6;
+}
+.project_item .subtitle {
+    font-size: 80%;
+    display: block;
+    text-align: left;
+    line-height: 1.2;
+    margin-bottom: -10px;
 }
 .project_item p {
     margin-top: 0.5em;
-    margin-left: 11em;
-    text-indent: 2em;
-    font-size: 0.8em;
+    margin-left: 10em;
 }
 
 .project_item span.role {
@@ -56,7 +62,7 @@ root {
     cursor: pointer;
 }
 .project_item img.image {
-    margin: 1em;
+    margin: 0 1em 1em;
     padding: 0.2em;
     float: left;
     width: 8em;
@@ -103,12 +109,12 @@ a.subproject {
     text-align: left;
     overflow: hidden !important;
 }
-.project_slideshow {
+.cycle-slideshow {
     margin-left: 11em;
     width: 500px;
     overflow: hidden !important;
 }
-.project_slideshow img {
+.cycle-slideshow img {
     border-radius: 2em;
 }
 .project_item img.corner {
@@ -133,6 +139,10 @@ a.subproject {
 .bottom {
     bottom: 0px;
 }
+.project_item .awards.synopsis {
+    height: 100px;
+    overflow: hidden;
+}
 .project_item.award {
     font-size: 90%;
     width: 50%;
@@ -149,9 +159,9 @@ a.subproject {
     color: honeydew;
 }
 .project_desc {
-    font-size: 16pt;
+    font-size: 14pt;
     width: 80%;
-    margin-top: 1em;
+    /*margin-top: 1em;*/
 }
 .awards {
     width: 180px;

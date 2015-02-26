@@ -1,5 +1,6 @@
 <?php
-    require_once('configure.php');
+    // ini_set('display_errors', 1);
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/includes/configure.php');
     require_once('function.resize.php');
     $project_id = $_GET['id'];
     mysql_connect(DB_HOST, DB_USERNAME, DB_PASSWORD);
@@ -22,42 +23,19 @@
     elseif($subprojects_id > 0) $project_id = $subprojects_id;  // Load first subproject if this is a parent placeholder
 
     $awards_result = mysql_query("SELECT * FROM awards_to_projects WHERE projects_id = $project_id ORDER BY award DESC");
-    if($awards_result) {
+    if(@mysql_num_rows($awards_result) > 0) {
         while ($row = mysql_fetch_assoc($awards_result)) {
             $awards[] = $row;
         }
     } else {
-            $awards = FALSE;
+        $awards = false;
     }
 ?>
-    <script type='text/javascript'> bkImages = new Array();</script>
 <?php
-    /*$bkImgsettings = array('w'=>500,'h'=>500,'crop'=>true);
-    $imgIdx = 0;
-    foreach (scandir($project['images_folder']) as $entry) {
-        if (!is_dir($entry)) {
-            if (in_array(mime_content_type($project['images_folder'] . '/' . $entry), $image_types)) {
-                ?>
-                    <script type='text/javascript'> bkImages[<?=$imgIdx?>] = '<?=resize($project['images_folder'] . '/' . $entry,$bkImgsettings)?>'</script>
-                <?php
-            } else {
-                foreach (scandir($project['images_folder'] . '/'. $entry) as $img) {
-                    if (in_array(mime_content_type($project['images_folder'] . '/' . $entry . '/' . $img), $image_types)) {
-                        ?>
-                            <script type='text/javascript'> bkImages[<?=$imgIdx?>] = '<?=resize($project['images_folder'] . '/' . $entry . '/' . $img ,$bkImgsettings)?>'</script>
-                        <?php
-                    }
-                }
-            }
-        }
-        $imgIdx++;
-    }*/
-
     if($awards) : ?>
-<div class="awards">
+<div class="awards cycle-slideshow">
 <?php
-    //echo print_r($awards);
-          foreach($awards as $award) : ?>
+  foreach($awards as $award) : ?>
     <div class="award laurel" <?=($award['laurel_image'] != null)? 'style="background: none; margin-top: 1em;"' : ''?>>
         <img src="<?=($award['laurel_image'] != null)? ROOT . DIRECTORY_SEPARATOR . $award['laurel_image'] : ROOT . '/css/images/1px_spacer.gif'?>" height="<?=($award['laurel_image'] != null)? '80' : '1'?>" />
         <h4 class="provider"><?=$award['provider']?></h4>
@@ -93,47 +71,37 @@
          endif;
     else:
 ?>
-    <div class="project_slideshow">
+    <div class="cycle-slideshow"
+        data-cycle-fx="fade"
+        data-cycle-speed="1500"
+        data-cycle-timeout="2000"
+        data-cycle-pause="1">
 <?php
 
         $settings = array('w'=>490,'h'=>280,'crop'=>true);
-        $imgIdx = 0;
-        foreach (scandir(ROOT . DIRECTORY_SEPARATOR . $project['images_folder']) as $entry) {
+        $dir = scandir($project['images_folder']);
+        foreach ($dir as $entry) {
+            $src = '/' . $project['images_folder'] . '/' . $entry;
             if (!is_dir($entry)) {
-                if (in_array(mime_content_type(ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/' . $entry), $image_types)) {
-                    ?>
-                        <img src="<?=resize(ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/' . $entry,$settings)?>" border="0" />
-                        <!--<script type='text/javascript'> bkImages[$imgIdx?>] = 'resize($project['images_folder'] . '/' . $entry,array('w'=>500,'h'=>500,'crop'=>true))?>'</script>-->
-                    <?php
+                if (in_array(finfo_file(finfo_open(FILEINFO_MIME_TYPE), $project['images_folder'] . '/' . $entry), $image_types)) {
+                        echo '<img src="' . $src . '" border="0"  height="300" />';
                 } else {
-                    foreach (scandir(ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/'. $entry) as $img) {
-                        if (in_array(mime_content_type(ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/' . $entry . '/' . $img), $image_types)) {
-                            ?>
-                                <img src="<?=resize(ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/' . $entry . '/' . $img ,$settings)?>" border="0" />
-                                <!--<script type='text/javascript'> bkImages[$imgIdx?>] = 'resize($project['images_folder'] . '/' . $entry . '/' . $img ,array('w'=>500,'h'=>500,'crop'=>true))?>'</script>-->
-                            <?php
+                    $dir2 = scandir($project['images_folder'] . '/'. $entry);
+                    foreach ($dir2 as $img) {
+                        $src2 = '/' . $project['images_folder'] . '/' . $entry . '/' . $img;
+                        if (in_array(mime_content_type($project['images_folder'] . '/' . $entry . '/' . $img), $image_types)) {
+                            echo '<img src="' . $src2 . '" border="0" height="300" />';
                         }
                     }
                 }
             }
-            $imgIdx++;
         }
 ?>
     </div>
-    <script type="text/javascript">
-        $('.project_slideshow').cycle({
-			fx:     'fade',
-			speed:  1500,
-			timeout: 4000,
-			pause:  1
-		});
-
-    </script>
-
 <?php
     endif;
     /******HACK for TRUST to load Alaska first from main project********/
-    $id = ($subprojects_id > 0) ? $subprojects_id : $_GET['id'];
+    $id = ($subprojects_id > 0) ? $subprojects_id : $project_id;
     if($subprojects_id > 0) {
         $result = mysql_query("SELECT id, is_subproject, name, description, YEAR(date_completed) AS date_completed, employer, status, role, images_folder, video_link FROM projects WHERE id = $subprojects_id LIMIT 1");
         $project = mysql_fetch_assoc($result);
@@ -161,8 +129,8 @@
     }
 ?>
 
-    <div class="full_desc" style="display:none;">
-        <p><?=$main_desc?></p>
+    <div class="full_desc" style="display:none">
+        <p><?php echo $main_desc; ?></p>
     </div>
 <?php
     if($project['is_subproject']) :
