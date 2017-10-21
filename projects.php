@@ -1,64 +1,107 @@
 <!DOCTYPE html>
 
 <?php
+// ini_set('display_errors', 1);
+
 require ('includes/configure.php');
 require ('includes/function.resize.php');
 require ('includes/function.truncate.php');
 
-mysql_connect(DB_HOST, DB_USERNAME, DB_PASSWORD);
-mysql_select_db(DB_DEFAULT);
-$where = '';
-if (isset($_GET['status'])) {
-    switch ($_GET['status']) {
-        case 'completed':
-            $where = ' WHERE date_completed IS NOT NULL ';
-            break;
+$db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_DEFAULT . ';charset=utf8', DB_USERNAME, DB_PASSWORD);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-        case 'current':
-            $where = ' WHERE date_completed IS NULL ';
-            break;
+$projects_query = "SELECT id, is_subproject, name, subtitle, description, YEAR(date_completed) AS date_completed, employer, status, role, images_folder, video_link, social_links, sort FROM projects ";
 
-        default:
-            break;
-    }
+if(isset($_GET['id'])) {
+    $projects_query .= "WHERE id = :id ";
 }
-if (isset($_GET['id'])) $where = ' WHERE id = "' . $_GET['id'] . '"';
 
-$result = mysql_query("SELECT id, is_subproject, name, subtitle, description, YEAR(date_completed) AS date_completed, employer, status, role, images_folder, video_link, social_links, sort FROM projects $where ORDER BY is_subproject ASC");
+$projects_query .= "ORDER BY is_subproject ASC";
+
+$stmt = $db->prepare($projects_query);
+
+if(isset($_GET['id'])) {
+    $stmt->bindParam('id', $_GET['id']);
+}
+
+$stmt->execute();
+
 $projects = array();
-while ($row = mysql_fetch_assoc($result)) {
-    if (!$row['is_subproject'] || isset($_GET['id'])) {
-        $projects[$row['id']] = $row;
-        $projects[$row['id']]['subprojects'] = array();
-    }
-    else {
-        $p_result = mysql_query("SELECT projects_id FROM subprojects_to_projects WHERE subprojects_id = " . $row['id'] . " LIMIT 1");
-        $parent = mysql_fetch_row($p_result);
-        if (!isset($projects[$parent[0]])) {
-        }
-        else {
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($results as $project) :
+
+    if(!$project['is_subproject']) {
+
+        $projects[$project['id']] = $project;
+        $projects[$project['id']]['subprojects'] = array();
+        $stmt3 = $db->prepare("SELECT * FROM awards_to_projects WHERE projects_id = :id
+                                UNION SELECT * FROM awards_to_projects WHERE projects_id IN
+                                    (SELECT subprojects_id FROM subprojects_to_projects WHERE projects_id = :id2)
+                                ORDER BY award DESC");
+
+        $stmt3->bindParam('id', $project['id']);
+        $stmt3->bindParam('id2', $project['id']);
+        $stmt3->execute();
+        $projects[$project['id']]['awards'] = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+
+        $dir = $_SERVER['DOCUMENT_ROOT'] . '/' . $project['images_folder'];
+
+        $projects[$project['id']]['images'] = getDirectoryTree($dir,'(jpg|jpeg|png|gif)');
+
+    } else {
+
+        $stmt2 = $db->prepare("SELECT projects_id FROM subprojects_to_projects WHERE subprojects_id = :id LIMIT 1");
+        $stmt2->bindParam('id', $project['id']);
+        $stmt2->execute();
+        $parent = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+        if(!isset($projects[$parent[0]])) {
+
+        } else {
             $projects[$parent[0]]['subprojects'][] = $row;
         }
     }
-}
+
+endforeach;
+
 usort($projects, "project_sort");
 
 // Define the custom sort function
-function project_sort($a, $b) {
+function project_sort($a,$b) {
     if ($a['sort'] == $b['sort']) {
         return 0;
     }
     return ($a['sort'] < $b['sort']) ? -1 : 1;
 }
 
-//    echo '<pre>';
-//    echo mysql_error();
-//    echo print_r($projects);
-//    echo '</pre>';
+function getDirectoryTree($outerDir, $x) {
+
+    $dirs = array_diff(scandir($outerDir), array('.', '..'));
+    $dir_array = array();
+    foreach($dirs as $d) {
+
+        if(is_dir($outerDir . DIRECTORY_SEPARATOR . $d)) {
+            $dir_array[] = getDirectoryTree($outerDir . '/' . $d , $x);
+        } else {
+            if ($x ? preg_match('/' . $x .'$/i', $d) : 1) {
+                $outerDir = str_replace($_SERVER['DOCUMENT_ROOT'], '', $outerDir);
+                $dir_array[] = $outerDir . '/' . $d;
+            }
+        }
+    }
+
+    $return = array();
+    array_walk_recursive($dir_array, function($a) use (&$return) { $return[] = $a; });
+
+    return $return;
+}
+
 if (isset($_GET['id'])) {
     foreach ($projects as $project) {
         $url = '/p/' . GenerateUrl($project['name']) . '/' . GenerateUrl($project['role']) . '/' . $project['id'];
-        CheckUrl($url);
+        // CheckUrl($url);
     }
 }
 ?>
@@ -86,8 +129,8 @@ endif; ?>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.0.0.js"></script>
         <script src="//malsup.github.io/jquery.cycle2.js"></script>
-        <script src="/javascript/projects.js" type="text/javascript"></script>
-        <script src="/javascript/threedots.js" type="text/javascript"></script>
+        <script src="/js/projects.js"></script>
+        <script src="/js/threedots.js"></script>
 <?php
 if (isset($_GET['id'])): ?>
         <script type="text/javascript">
@@ -99,37 +142,39 @@ endif; ?>
     <body>
         <div id="wrapper">
             <div id="header">
-                <?php
-include ('menu.php'); ?>
+                <?php include ('menu.php'); ?>
             </div>
+
             <div id="content">
+
                 <div id="backbtn" style="visibility:hidden;"><a href="/projects.php" title="Back to Projects">&nbsp;</a></div>
+
                     <?php
-$img_settings = array('w' => 128, 'h' => 128, 'crop' => true);
-foreach ($projects as $project) {
+
+    $img_settings = array('w' => 128, 'h' => 128, 'crop' => true);
+    
+    foreach ($projects as $project) {
+
 ?>
                 <section>
                     <div id="project_id_<?php echo $project['id'] ?>" class="project_item fadein fast">
-                        <?php
-    $url = '/p/' . GenerateUrl($project['name']) . DIRECTORY_SEPARATOR . GenerateUrl($project['role']) . DIRECTORY_SEPARATOR . $project['id'];
-    $img_src = '/css/images/1px_spacer.gif';
-    if (isset($_GET['id']) && file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $project['id'] . '.jpg')) $img_src = resize(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $project['id'] . '.jpg', $img_settings);
-    elseif (file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main.jpg')) $img_src = resize(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main.jpg', $img_settings);
 
-    $awards_result = mysql_query("SELECT * FROM awards_to_projects WHERE projects_id = {$project['id']}
-                                                            UNION SELECT * FROM awards_to_projects WHERE projects_id IN (SELECT subprojects_id FROM subprojects_to_projects WHERE projects_id = {$project['id']}) ORDER BY award DESC");
-    if (@mysql_num_rows($awards_result) > 0) {
-        while ($row = mysql_fetch_assoc($awards_result)) {
-            $awards[$project['id']][] = $row;
-        }
-    }
-    else {
-        $awards[$project['id']] = FALSE;
-    }
+<?php
+
+        $url = '/p/' . GenerateUrl($project['name']) . DIRECTORY_SEPARATOR . GenerateUrl($project['role']) . DIRECTORY_SEPARATOR . $project['id'];
+
+        $img_src = '/css/images/1px_spacer.gif';
+
+        if (isset($_GET['id']) && file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $project['id'] . '.jpg')) $img_src = resize(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $project['id'] . '.jpg', $img_settings);
+
+        elseif (file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main.jpg')) $img_src = resize(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main.jpg', $img_settings);
+
 ?>
                         <a href="<?php echo $url?>"><img class="image" src="<?php echo $img_src?> " /></a>
-                <?php
+<?php
+
     if ($project['social_links']): ?>
+
                         <div id="social_links">
                 <?php
         $links = explode('\n', $project['social_links']);
@@ -165,14 +210,16 @@ foreach ($projects as $project) {
                                 '' ?></span>
 
                 <?php
-    if ($awards[$project['id']]): ?>
+
+    if ($project['awards']): ?>
+    
                         <div class="cycle-slideshow awards synopsis"
                                 data-cycle-fx="fade"
                                 data-cycle-speed="500">
                         <?php
 
         //echo print_r($awards);
-        foreach ($awards[$project['id']] as $award): ?>
+        foreach ($project['awards'] as $award): ?>
                                 <div class="award laurel" <?php echo ($award['laurel_image'] != null) ? 'style="background: none; margin-top: 1em;"' : '' ?>>
                                     <img src="<?php echo ($award['laurel_image'] != null) ? ROOT . DIRECTORY_SEPARATOR . $award['laurel_image'] : '/css/images/1px_spacer.gif' ?>" height="<?php echo ($award['laurel_image'] != null) ? '80' : '1' ?>" />
                                     <h4 class="provider"><?php echo $award['provider'] ?></h4>

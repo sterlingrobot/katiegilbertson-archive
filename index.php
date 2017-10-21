@@ -6,13 +6,17 @@
     require('includes/configure.php');
     require('includes/function.resize.php');
 
-    mysql_connect(DB_HOST, DB_USERNAME, DB_PASSWORD);
-    mysql_select_db(DB_DEFAULT);
+    $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_DEFAULT . ';charset=utf8', DB_USERNAME, DB_PASSWORD);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-    $result = mysql_query("SELECT a.provider, a.award, a.laurel_image FROM awards_to_projects a ORDER BY RAND()");
+    $stmt = $db->prepare("SELECT p.id, a.provider, a.award, a.laurel_image, p.name, YEAR(p.date_completed) AS date_completed, p.status, p.role FROM awards_to_projects a LEFT JOIN projects p ON p.id = a.projects_id ORDER BY date_completed DESC");
+    $stmt->execute();
+
     $awards = array();
-    while($row = mysql_fetch_assoc($result)) {
-            $awards[] = $row;
+
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $awards[] = $row;
     }
 ?>
 
@@ -58,7 +62,7 @@
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.0.0.js"></script>
-        <script src="http://malsup.github.io/jquery.cycle.all.js"></script>
+        <script src="//malsup.github.io/jquery.cycle.all.js"></script>
         <script type="text/javascript">
             $(function() {
                 $('.fadein').css('visibility','hidden');
@@ -73,8 +77,8 @@
             })
         </script>
         <!--<script src="javascript/content.js" type="text/javascript"></script>-->
-        <script src="/javascript/menu.js" type="text/javascript"></script>
-        <script src="/javascript/threedots.js" type="text/javascript"></script>
+        <script src="/js/menu.js"></script>
+        <script src="/js/threedots.js"></script>
     </head>
     <body id="main">
         <div id="wrapper">
@@ -83,7 +87,7 @@
             </div>
             <div id="news">
                 <a href="/p/indian-relay/editor/1">
-                    <img src="http://www.katiegilbertson.com/includes/cache/4ab5026642f36e54b5ea5052371a90ed_w128_h128_cp_sc.jpg" width="55" height="55" />
+                    <img src="/includes/cache/4ab5026642f36e54b5ea5052371a90ed_w128_h128_cp_sc.jpg" width="55" height="55" />
                     <h4>Indian Relay<br/>EMMY<sup>&reg;</sup> Winner!<br>Documentary - Cultural<br><small>NATAS Northwest</small></h4>
                 </a>
             </div>

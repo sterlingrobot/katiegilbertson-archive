@@ -1,0 +1,11 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-sm')" flex>
+    <md-list>
+      <md-item ng-repeat="item in app.menu">
+        <md-item-content>
+          <div class="md-tile-content">
+            <a href="{{ item.url }}"><h4>{{ item.title }}</h4></a>
+          </div>
+        </md-item-content>
+      </md-item>
+    </md-list>
+</md-sidenav>

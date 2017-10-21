@@ -1,7 +1,12 @@
 # Use PHP5 Single php.ini as default
-AddHandler application/x-httpd-php5s .php
+# AddHandler application/x-httpd-php5s .php
 
 Redirect 301 /index.html /index.php
 
 RewriteEngine On
+
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
 RewriteRule  ^p/?.*/([0-9]+)$  /projects.php?id=$1 [NC,L]

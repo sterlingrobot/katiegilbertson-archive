@@ -174,7 +174,7 @@ a.subproject {
 }
 .awards .award {
     min-height: 60px;
-    background: url('http://www.katiegilbertson.com/images/laurel.png') no-repeat center 15px;
+    background: url('/images/laurel.png') no-repeat center 15px;
 }
 .awards .award.float {
     width: 160px;
