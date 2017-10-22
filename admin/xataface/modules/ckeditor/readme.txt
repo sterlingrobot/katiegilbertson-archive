@@ -1,1 +1,0 @@
-See http://xataface.com/dox/modules/ckeditor/latest

@@ -1,6 +1,0 @@
-var xatacard;
-
-/**
- * @package
- */
-xatacard = {};
