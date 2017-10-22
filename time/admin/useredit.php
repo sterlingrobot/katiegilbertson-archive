@@ -80,9 +80,9 @@ $get_user = addslashes($get_user);
 $row_count = 0;
 
 $query = "select * from ".$db_prefix."jobs where jobname = '".$get_user."' order by jobname";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $row_count++;
 $row_color = ($row_count % 2) ? $color2 : $color1;
@@ -97,13 +97,13 @@ $reports = "".$row['reports']."";
 $time_admin = "".$row['time_admin']."";
 $disabled = "".$row['disabled']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 
 // make sure you cannot edit the admin perms for the last admin user in the system!! //
 
 if (!empty($admin)) {
-  $admin_count = mysql_query("select jobname from ".$db_prefix."jobs where admin = '1'");
-  @$admin_count_rows = mysql_num_rows($admin_count);
+  $admin_count = mysqli_query($db, "select jobname from ".$db_prefix."jobs where admin = '1'");
+  @$admin_count_rows = mysqli_num_rows($admin_count);
   if (@$admin_count_rows == "1") {
     $evil = "1";
   }
@@ -229,8 +229,8 @@ $post_username = addslashes($post_username);
 
 if (!empty($post_username)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_username = "".$row['jobname']."";
 }
 if (!isset($tmp_username)) {echo "$tmp_username, $post_username. Something is fishy here.\n"; exit;}
@@ -364,21 +364,21 @@ echo "            </table>\n";
 
 if (!empty($office_name)) {
 $query = "select * from ".$db_prefix."offices where officename = '".$office_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_officename = "".$row['officename']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($tmp_officename)) {echo "Dept is not defined.\n"; exit;}
 }
 
 if (!empty($group_name)) {
 $query = "select * from ".$db_prefix."groups where groupname = '".$group_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_groupname = "".$row['groupname']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($tmp_officename)) {echo "Group is not defined.\n"; exit;}
 }
 
@@ -472,7 +472,7 @@ $query3 = "update ".$db_prefix."jobs set displayname = ('".$display_name."'), em
 	   office = ('".$office_name."'), admin = ('".$admin_perms."'), reports = ('".$reports_perms."'), time_admin = ('".$time_admin_perms."'),
            disabled = ('".$post_disabled."')
            where jobname = ('".$post_username."')";
-$result3 = mysql_query($query3);
+$result3 = mysqli_query($db, $query3);
 
 echo "<table class='table'>\n";
 echo "  <tr valign=top>\n";
@@ -525,9 +525,9 @@ echo "              <tr><td height=15></td></tr>\n";
 $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
 	  where jobname = '".$post_username."'
           order by jobname";
-$result4 = mysql_query($query4);
+$result4 = mysqli_query($db, $query4);
 
-while ($row=mysql_fetch_array($result4)) {
+while ($row=mysqli_fetch_array($result4)) {
 
 $username = stripslashes("".$row['jobname']."");
 $displayname = stripslashes("".$row['displayname']."");
@@ -539,7 +539,7 @@ $reports = "".$row['reports']."";
 $time_admin = "".$row['time_admin']."";
 $disabled = "".$row['disabled']."";
 }
-mysql_free_result($result4);
+mysqli_free_result($result4);
 
 echo "              <tr><td>Jobname:</td><td align=left class=table_rows 
                       colspan=2 width=80% style='padding-left:20px;'>$username</td></tr>\n";

@@ -123,12 +123,12 @@ $post_username = addslashes($post_username);
 $display_name = addslashes($display_name);
 
 $query5 = "select jobname from ".$db_prefix."jobs where jobname = '".$post_username."' order by jobname";
-$result5 = mysql_query($query5);
+$result5 = mysqli_query($db, $query5);
 
-while ($row=mysql_fetch_array($result5)) {
+while ($row=mysqli_fetch_array($result5)) {
   $tmp_username = "".$row['jobname']."";
 }
-mysql_free_result($result5);
+mysqli_free_result($result5);
 
 $post_username = stripslashes($post_username);
 $display_name = stripslashes($display_name);
@@ -308,21 +308,21 @@ echo "            </table>\n";
 
 if (!empty($office_name)) {
 $query = "select * from ".$db_prefix."offices where officename = '".$office_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_officename = "".$row['officename']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($tmp_officename)) {echo "Dept is not defined.\n"; exit;}
 }
 
 if (!empty($group_name)) {
 $query = "select * from ".$db_prefix."groups where groupname = '".$group_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_groupname = "".$row['groupname']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($tmp_officename)) {echo "Group is not defined.\n"; exit;}
 }
 
@@ -420,7 +420,7 @@ $confirm_password = crypt($confirm_password, 'xy');
 $query3 = "insert into ".$db_prefix."jobs (jobname, displayname, employee_passwd, email, groups, office, admin, reports, time_admin, disabled)
            values ('".$post_username."', '".$display_name."', '".$password."', '".$email_addy."', '".$group_name."', '".$office_name."', '".$admin_perms."',
            '".$reports_perms."', '".$time_admin_perms."', '".$post_disabled."')";
-$result3 = mysql_query($query3);
+$result3 = mysqli_query($db, $query3);
 
 echo "<table class='table'>\n";
 echo "  <tr valign=top>\n";
@@ -469,9 +469,9 @@ echo "              <tr><td height=15></td></tr>\n";
 $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
 	  where jobname = '".$post_username."'
           order by jobname";
-$result4 = mysql_query($query4);
+$result4 = mysqli_query($db, $query4);
 
-while ($row=mysql_fetch_array($result4)) {
+while ($row=mysqli_fetch_array($result4)) {
 
 $username = stripslashes("".$row['jobname']."");
 $displayname = stripslashes("".$row['displayname']."");
@@ -483,7 +483,7 @@ $reports = "".$row['reports']."";
 $time_admin = "".$row['time_admin']."";
 $disabled = "".$row['disabled']."";
 }
-mysql_free_result($result4);
+mysqli_free_result($result4);
 
 echo "              <tr><td>Jobname:</td><td align=left class=table_rows
                       colspan=2 width=80% style='padding-left:20px;'>$username</td></tr>\n";

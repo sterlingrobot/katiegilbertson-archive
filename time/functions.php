@@ -104,9 +104,9 @@ function roundTimestamp($time, $prec='0') {
 function disabled_acct($get_user) {
 
   $query = "select jobname, disabled from jobs where jobname = '".addslashes($get_user)."'";
-  $result = mysql_query($query);
+  $result = mysqli_query($db, $query);
 
-  while ($row=mysql_fetch_array($result)) {
+  while ($row=mysqli_fetch_array($result)) {
 
     if ("".$row["disabled"]."" == 1) {
       echo "<table width=100% border=0 cellpadding=7 cellspacing=1>\n";

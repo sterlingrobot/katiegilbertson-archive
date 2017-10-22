@@ -16,7 +16,7 @@ if (!isset($_GET['printer_friendly'])) {
 	include 'topmain.php';
 	echo "<div id='wrapper' class='row'>\n"; // -- MAIN CONTAINER WRAPPER
 	echo "<div class='col-md-5'>"; // -- START LEFT COLUMN CONTAINER
-	echo "<div id='contentLoading' style='display: block; position: absolute; z-index: 100; width: 100%; height: 100%; color: #FFF; background: rgba(0,0,0,0.5); text-align:center; font: 2em Lora;'><img src='http://www.cherrytreedesign.com/images/images/sm_graphics/loader.gif' width='33' height='33' style='margin-top: 200px;'/>&nbsp;&nbsp;Please wait...</div>";
+	echo "<div id='contentLoading' style='display: block; position: absolute; z-index: 100; width: 100%; height: 100%; color: #FFF; background: rgba(0,0,0,0.5); text-align:center; font: 2em Lora;'><img src='images/loader.gif' width='33' height='33' style='margin-top: 200px;'/>&nbsp;&nbsp;Please wait...</div>";
     include 'leftmain.php';
 	echo "</div>"; // -- END LEFT COLUMN CONTAINER
 }
@@ -166,7 +166,7 @@ elseif (($display_current_users == "no") && ($display_office != "all") && ($disp
 
 }
 
-$result = mysql_query($query) or die("<h3>MYSQL QUERY ERROR</h3>\n<b>Query:</b> ".$query."\n<br/><br/>\n".mysql_error());
+$result = mysqli_query($db, $query) or die("<h3>MYSQL QUERY ERROR</h3>\n<b>Query:</b> ".$query."\n<br/><br/>\n".mysqli_error($db));
 
 $time = time();
 $tclock_hour = gmdate('H',$time);

@@ -23,20 +23,21 @@ echo "        <tr class=right_main_text><td align=center>Click <a class='btn btn
 echo "      </table><br /></td></tr></table>\n"; exit;
 }
 include 'admin_menu.php';
-$user_count = mysql_query("select jobname from ".$db_prefix."jobs
+$user_count = mysqli_query($db, "select jobname from ".$db_prefix."jobs
                            order by jobname");
-@$user_count_rows = mysql_num_rows($user_count);
+@$user_count_rows = mysqli_num_rows($user_count);
 
-$admin_count = mysql_query("select jobname from ".$db_prefix."jobs where admin = '1'");
-@$admin_count_rows = mysql_num_rows($admin_count);
+$admin_count = mysqli_query($db, "select jobname from ".$db_prefix."jobs where admin = '1'");
+@$admin_count_rows = mysqli_num_rows($admin_count);
 
-$time_admin_count = mysql_query("select jobname from ".$db_prefix."jobs where time_admin = '1'");
-@$time_admin_count_rows = mysql_num_rows($time_admin_count);
+$time_admin_count = mysqli_query($db, "select jobname from ".$db_prefix."jobs where time_admin = '1'");
+@$time_admin_count_rows = mysqli_num_rows($time_admin_count);
 
-$reports_count = mysql_query("select jobname from ".$db_prefix."jobs where reports = '1'");
-@$reports_count_rows = mysql_num_rows($reports_count);
+$reports_count = mysqli_query($db, "select jobname from ".$db_prefix."jobs where reports = '1'");
+@$reports_count_rows = mysqli_num_rows($reports_count);
 
 echo "    <td align=left class=right_main scope=col>\n";
+echo "      <div class='col-md-10'>\n";
 echo "      <table class='table'>\n";
 echo "        <tr class=right_main_text>\n";
 echo "          <td valign=top>\n";
@@ -69,9 +70,9 @@ $row_count = 0;
 
 $query = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
           order by jobname";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $jobname = stripslashes("".$row['jobname']."");
 $displayname = stripslashes("".$row['displayname']."");
@@ -137,7 +138,7 @@ echo "                <td class='text-center'><a title=\"Delete Job: $jobname\"
                     <img border=0 src='../images/icons/delete.png' /></a></td></tr>\n";
 }
 }
-echo "          </table></td></tr>\n";
+echo "          </table></div></td></tr>\n";
 include '../footer.php';
 exit;
 ?>

@@ -1,11 +1,4 @@
 <?php
-// DEBUG POST vars
-//echo "<div class='container'>";
-//echo "	<pre class='pre-scrollable'>";
-//echo var_dump($_SERVER['HTTP_USER_AGENT']);
-//echo ($is_tablet)? "This is the Nook" : "Not the Nook";
-//echo "	</pre>";
-//echo "</div>";
 
 echo "<div id='header' class='row'>";
 // display the logo in top left of each page. This will be $logo you setup in config.inc.php. //

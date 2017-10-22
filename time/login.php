@@ -14,15 +14,16 @@ if (isset($_POST['login_userid']) && (isset($_POST['login_password']))) {
 
     $query = "select jobname, employee_passwd, admin, time_admin from ".$db_prefix."jobs
               where jobname = '".$login_userid."'";
-    $result = mysql_query($query);
+    $result = mysqli_query($db, $query);
 
-    while ($row=mysql_fetch_array($result)) {
+    // while (
+        $row=mysqli_fetch_assoc($result);
 
         $admin_username = "".$row['jobname']."";
         $admin_password = "".$row['employee_passwd']."";
         $admin_auth = "".$row['admin']."";
         $time_admin_auth = "".$row['time_admin']."";
-    }
+    // }
 
     if (($login_userid == @$admin_username) && ($login_password == @$admin_password) && ($admin_auth == "1")) {
         $_SESSION['valid_user'] = $login_userid;

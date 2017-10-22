@@ -36,7 +36,7 @@ echo "            	<tbody>\n";
 $row_count = 0;
 $page_count = 0;
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_assoc($result)) {
 
     $display_stamp = "".$row["timestamp"]."";
     $time = date($timefmt, $display_stamp);
@@ -150,5 +150,5 @@ if($display_weather == "yes") {
 	echo "		  <div style='padding: 20px; text-align: center; color: #CCC;'><img src='http://www.cherrytreedesign.com/images/images/sm_graphics/loader.gif' width='20' height='20' />&nbsp;&nbsp;Loading...</div>";
 	echo "	</div>";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 ?>

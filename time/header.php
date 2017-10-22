@@ -30,22 +30,20 @@ if ($restrict_ips == "yes") {
 
 // connect to db anc check for correct db version //
 
-@ $db = mysql_pconnect($db_hostname, $db_username, $db_password);
+@ $db = mysqli_connect('p:' .$db_hostname, $db_username, $db_password, $db_name);
 if (!$db) {echo "Error: Could not connect to the database. Please try again later."; exit;}
-mysql_select_db($db_name);
 
 $table = "dbversion";
-$result = mysql_query("SHOW TABLES LIKE '".$db_prefix.$table."'");
-@$rows = mysql_num_rows($result);
+$result = mysqli_query($db, "SHOW TABLES LIKE '".$db_prefix.$table."'");
 
-if ($rows == "1") {
+if ($result) {
     $dbexists = "1";
 } else {
     $dbexists = "0";
 }
 
-$db_version_result = mysql_query("select * from ".$db_prefix."dbversion");
-while (@$row = mysql_fetch_array($db_version_result)) {
+$db_version_result = mysqli_query($db, "select * from ".$db_prefix."dbversion");
+while (@$row = mysqli_fetch_assoc($db_version_result)) {
     @$my_dbversion = "".$row["dbversion"]."";
 }
 

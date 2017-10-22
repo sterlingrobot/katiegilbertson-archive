@@ -22,9 +22,9 @@ if ($request == 'POST'){
         if (isset($displayname)) {
             $displayname = addslashes($displayname);
             $query = "select displayname from ".$db_prefix."jobs where displayname = '".$displayname."'";
-            $emp_name_result = mysql_query($query);
+            $emp_name_result = mysqli_query($query);
 
-            while ($row = mysql_fetch_array($emp_name_result)) {
+            while ($row = mysqli_fetch_assoc($emp_name_result)) {
                 $tmp_displayname = "".$row['displayname']."";
             }
             if ((!isset($tmp_displayname)) && (!empty($displayname))) {echo "Jobname is not in the database.\n"; exit;}
@@ -38,9 +38,9 @@ if ($request == 'POST'){
         if (isset($fullname)) {
             $fullname = addslashes($fullname);
             $query = "select jobname from ".$db_prefix."jobs where jobname = '".$fullname."'";
-            $emp_name_result = mysql_query($query);
+            $emp_name_result = mysqli_query($query);
 
-            while ($row = mysql_fetch_array($emp_name_result)) {
+            while ($row = mysqli_fetch_assoc($emp_name_result)) {
                 $tmp_jobname = "".$row['jobname']."";
             }
             if ((!isset($tmp_jobname)) && (!empty($fullname))) {echo "Jobname is not in the database.\n"; exit;}
@@ -88,9 +88,9 @@ if ($request == 'POST') {
     }
 
     $query = "select punchitems from ".$db_prefix."punchlist";
-    $punchlist_result = mysql_query($query);
+    $punchlist_result = mysqli_query($query);
 
-    while ($row = mysql_fetch_array($punchlist_result)) {
+    while ($row = mysqli_fetch_assoc($punchlist_result)) {
         $tmp_inout = "".$row['punchitems']."";
     }
 
@@ -154,9 +154,9 @@ if ($request == 'POST') {
 			if ($show_display_name == "yes") {
 
 				$sel_query = "select jobname from ".$db_prefix."jobs where displayname = '".$displayname."'";
-				$sel_result = mysql_query($sel_query);
+				$sel_result = mysqli_query($sel_query);
 
-				while ($row=mysql_fetch_array($sel_result)) {
+				while ($row=mysqli_fetch_assoc($sel_result)) {
 					$fullname = stripslashes("".$row["jobname"]."");
 					$fullname = addslashes($fullname);
 				}
@@ -170,10 +170,10 @@ if ($request == 'POST') {
 						  '".$notes."')";
 			}
 
-			$result = mysql_query($query);
+			$result = mysqli_query($db, $query);
 
 			$update_query = "update ".$db_prefix."jobs set tstamp = '".$tz_stamp."' where jobname = '".$fullname."'";
-			$other_result = mysql_query($update_query);
+			$other_result = mysqli_query($db, $update_query);
 
 	//        echo "<head>\n";
 	//        echo "<meta http-equiv='refresh' content=0;url=index.php>\n";
@@ -183,9 +183,9 @@ if ($request == 'POST') {
 
 		  if ($show_display_name == "yes") {
 			  $sel_query = "select jobname, employee_passwd from ".$db_prefix."jobs where displayname = '".$displayname."'";
-			  $sel_result = mysql_query($sel_query);
+			  $sel_result = mysqli_query($db, $sel_query);
 
-			  while ($row=mysql_fetch_array($sel_result)) {
+			  while ($row=mysqli_fetch_assoc($sel_result)) {
 				  $tmp_password = "".$row["employee_passwd"]."";
 				  $fullname = "".$row["jobname"]."";
 			  }
@@ -196,9 +196,9 @@ if ($request == 'POST') {
 		  } else {
 
 			  $sel_query = "select jobname, employee_passwd from ".$db_prefix."jobs where jobname = '".$fullname."'";
-			  $sel_result = mysql_query($sel_query);
+			  $sel_result = mysqli_query($db, $sel_query);
 
-			  while ($row=mysql_fetch_array($sel_result)) {
+			  while ($row=mysqli_fetch_assoc($sel_result)) {
 				  $tmp_password = "".$row["employee_passwd"]."";
 			  }
 
@@ -207,7 +207,7 @@ if ($request == 'POST') {
 		  if ($employee_passwd == $tmp_password && $errors === 0) {
 
 			  $last_time_query = "select e.tstamp, i.inout from ".$db_prefix."jobs e left join ".$db_prefix."info i on i.timestamp = e.tstamp AND i.fullname = e.jobname where jobname='" . $fullname . "' limit 1";
-			  $last_time_array = mysql_fetch_array(mysql_query($last_time_query));
+			  $last_time_array = mysqli_fetch_assoc(mysqli_query($db, $last_time_query));
 			  $last_time = $last_time_array['tstamp'];
 
 			  if($inout != $last_time_array['inout']) {	  // prevent duplicate ins and outs
@@ -219,60 +219,15 @@ if ($request == 'POST') {
 					$query = "insert into ".$db_prefix."info (fullname, `inout`, timestamp, notes) values ('".$fullname."', '".$inout."', '".$tz_stamp."',
 							  '".$notes."')";
 				}
-				$result = mysql_query($query);
+				$result = mysqli_query($db, $query);
 
 				$update_query = "update ".$db_prefix."jobs set tstamp = '".$tz_stamp."' where jobname = '".$fullname."'";
-				$other_result = mysql_query($update_query);
+				$other_result = mysqli_query($db, $update_query);
 
-//				$active_projects_query = "select * from ".$db_prefix."projects_hours ph left join ".$db_prefix."projects p on p.project = ph.project where employee='" . $fullname . "' and active=1";
-//				$active_projects_result = mysql_query($active_projects_query);
-//
-//				if($active_projects_result && @mysql_num_rows($active_projects_result) > 0) {
-//				  $active_projects = array();
-//				  $active_projects_codes = array();
-//				  $total_active_units = 0;
-//				  while($row = mysql_fetch_array($active_projects_result)) {
-//					$active_projects[] = $row;
-//					$active_projects_codes[] = $row['project'];
-//					$total_active_units += $row['units'];
-//				  }
-  //				echo '<pre>' . print_r($active_projects) . '</pre>';
-//				}
-//				if(isset($projects) && count($projects) > 0) {  // clocking in with projects, or switching projects
-//				  $WORKetc = new WORKetc();
-//				  foreach($projects as $project) {
-//					$check_project_result = mysql_query("select project from projects where project = '" . $project . "'");
-//					if(@mysql_num_rows($check_project_result) === 0) {
-//					  $units = round((float)$WORKetc->GetInvoiceSearchResults(array('StartIndex' => 0,
-//																					'FetchSize' => 1,
-//																					'keywords' => $project,
-//																					'Relation' => 0,
-//																					'filter' => 'Any',
-//																					'sort' => 'InvoiceID',
-//																					'asc' => true))->Results->Invoice->Total/1000, 1);
-//					  $project_main_query = "insert into ".$db_prefix."projects (project, units, date_started) values('" . $project . "', '" . $units . "', NOW())";
-//					  $project_main_result = mysql_query($project_main_query);
-//					}
-//					$project_main_update_query = "update ".$db_prefix."projects set date_last_modified=NOW() where project='" . $project . "'";
-//					$project_update_query = "insert into ".$db_prefix."projects_hours (employee, project, active) values('" . $fullname . "', '" . $project . "', 1) on duplicate key update active=1";
-//					$project_main_update_result = mysql_query($project_main_update_query);
-//					$project_update_result = mysql_query($project_update_query);
-//				  }
-//				  $working_on .= "Working on :<ul><li>" . implode('</li></li>', $projects) . "</li></ul>";
-//				}
-//				if($inout !== 'IN') { // clocking out, calculate time difference from last timestamp (IN)
-//				  if(isset($active_projects)) {
-//					foreach($active_projects as $active_project) {
-//					  $hours = ($tz_stamp - $last_time)/3600;
-//					  $weighted_hours = $active_project['units']/$total_active_units * $hours;
-//					  $active_project_update_query = "update ".$db_prefix."projects_hours set hours = hours + $weighted_hours, active = 0 where employee='" . $fullname . "' and project='" . $active_project['project'] . "'";
-//  //					echo $active_project_update_query;
-//					  $active_project_update_result = mysql_query($active_project_update_query);
-//					}
-//				  }
-                                if($inout === 'lunch') echo "<script>$(function() { $('#lunchModal').modal(); setTimeout('clearModal(\"#lunchModal\")', 5000); });</script>";
-                                elseif($inout === 'out') echo "<script>$(function() { $('#clockoutModal').modal(); setTimeout('clearModal(\"#clockoutModal\")', 5000); });</script>";
-                                else echo "<script>$(function() { $('#clockinModal').modal(); setTimeout('clearModal(\"#clockinModal\")', 10000); });</script>";
+                if($inout === 'lunch') echo "<script>$(function() { $('#lunchModal').modal(); setTimeout('clearModal(\"#lunchModal\")', 5000); });</script>";
+                elseif($inout === 'out') echo "<script>$(function() { $('#clockoutModal').modal(); setTimeout('clearModal(\"#clockoutModal\")', 5000); });</script>";
+                else echo "<script>$(function() { $('#clockinModal').modal(); setTimeout('clearModal(\"#clockinModal\")', 10000); });</script>";
+
 			  } else { // duplicate entry of IN, OUT, Lunch
 				echo "<script>$(function() { $('#dupeModal').modal(); setTimeout('clearModal(\"#dupeModal\")', 3000); });</script>";
 			  }
@@ -301,10 +256,10 @@ echo "		  <div class='form-group'>";
 if ($show_display_name == "yes") {
 
     $query = "select displayname,groups,office from ".$db_prefix."jobs where disabled <> '1'  and jobname <> 'admin' order by displayname";
-    $emp_name_result = mysql_query($query);
+    $emp_name_result = mysqli_query($db, $query);
     echo "              <select id='name_entry' class='form-control input-lg ' style='background: #39b3d7; color: #FFF;' name='left_displayname' tabindex=1>\n";
     echo "              <option id='name_select' disabled selected value =''>&nbsp;Select job...</option>\n";
-    while ($row = mysql_fetch_array($emp_name_result)) {
+    while ($row = mysqli_fetch_assoc($emp_name_result)) {
         $abc = stripslashes("".$row['displayname']."");
 
         if ((isset($_COOKIE['remember_me']) && (stripslashes($_COOKIE['remember_me']) == $abc))
@@ -318,16 +273,16 @@ if ($show_display_name == "yes") {
 
     echo "              </select>
 					  </div>\n";
-    mysql_free_result($emp_name_result);
+    mysqli_free_result($emp_name_result);
 
 } else {
 
     $query = "select jobname from ".$db_prefix."jobs where disabled <> '1'  and jobname <> 'admin' order by jobname";
-    $emp_name_result = mysql_query($query);
+    $emp_name_result = mysqli_query($db, $query);
     echo "              <select id='name_entry' class='form-control input-lg' style='background: #39b3d7; color: #FFF;' name='left_fullname' tabindex=1>\n";
     echo "              <option id='name_select' disabled selected value =''>&nbsp;Name...</option>\n";
 
-    while ($row = mysql_fetch_array($emp_name_result)) {
+    while ($row = mysqli_fetch_assoc($emp_name_result)) {
 
         $def = stripslashes("".$row['jobname']."");
         if (((isset($_COOKIE['remember_me'])) && (stripslashes($_COOKIE['remember_me']) == $def))) {
@@ -340,7 +295,7 @@ if ($show_display_name == "yes") {
 
     echo "              </select>
 					  </div>\n";
-    mysql_free_result($emp_name_result);
+    mysqli_free_result($emp_name_result);
 }
 
 // determine whether to use encrypted passwords or not //
@@ -355,13 +310,14 @@ if ($use_passwd == "yes") {
 echo "		<div class='row'>&nbsp;</div>";
 echo "		<div class='row'>";
 //echo "        <label class='control-label' for='left_inout'>In/Out:</label><div class='clearfix'></div>\n";
+
 // query to populate dropdown with punchlist items //
 
 $query = "select punchitems from ".$db_prefix."punchlist";
-$punchlist_result = mysql_query($query);
+$punchlist_result = mysqli_query($db, $query);
 
 $index = 3;
-while ($row = mysql_fetch_array($punchlist_result)) {
+while ($row = mysqli_fetch_assoc($punchlist_result)) {
 	$click = "";
     switch ($row['punchitems']) {
 	  case 'in' :
@@ -384,7 +340,7 @@ while ($row = mysql_fetch_array($punchlist_result)) {
 }
 echo "				  <div class='clearfix'> </div>";
 echo "				  </div>\n";
-mysql_free_result( $punchlist_result );
+mysqli_free_result( $punchlist_result );
 echo "		  <div class='form-group'>";
 //echo "			<label class='control-label' for='left_notes'>Notes:</label>\n";
 echo "			  <textarea class='form-control' name='left_notes' maxlength='250' rows='1' placeholder='Add a note...' tabindex=".$index."></textarea>\n";
