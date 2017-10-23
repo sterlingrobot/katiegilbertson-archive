@@ -83,20 +83,20 @@ echo "            <br />\n";
 $get_user = addslashes($get_user);
 
 $query = "select jobname from ".$db_prefix."jobs where jobname = '".$get_user."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $username = stripslashes("".$row['jobname']."");
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($username)) {echo "username is not defined for this user.\n"; exit;}
 
 if (!empty($get_office)) {
 $query = "select * from ".$db_prefix."offices where officename = '".$get_office."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $getoffice = "".$row['officename']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 if (!isset($getoffice)) {echo "Dept is not defined for this user. Go back and associate this user with an office.\n"; exit;}
 
@@ -135,11 +135,11 @@ $get_office = $_POST['get_office'];
 
 if (!empty($get_office)) {
 $query = "select * from ".$db_prefix."offices where officename = '".$get_office."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $getoffice = "".$row['officename']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 if (!isset($getoffice)) {echo "Dept is not defined for this user. Go back and associate this user with an office.\n"; exit;}
 
@@ -188,11 +188,11 @@ $post_username = addslashes($post_username);
 
 if (!empty($post_username)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $username = "".$row['jobname']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($username)) {echo "username is not defined for this user.\n"; exit;}
 }
 
@@ -250,7 +250,7 @@ $confirm_password = crypt($confirm_password, 'xy');
 $post_username = addslashes($post_username);
 
 $query = "update ".$db_prefix."jobs set employee_passwd = ('".$new_password."') where jobname = ('".$post_username."')";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
 $post_username = stripslashes($post_username);
 

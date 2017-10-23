@@ -39,9 +39,9 @@ echo "      </table><br /></td></tr></table>\n"; exit;
 $get_status = $_GET['statusname'];
 
 $query = "select * from ".$db_prefix."punchlist where punchitems = '".$get_status."'";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $punchitem = "".$row['punchitems']."";
 $color = "".$row['color']."";
@@ -131,9 +131,9 @@ if ($post_in_out == 'In') {
 }
 
 $query = "select * from ".$db_prefix."punchlist where punchitems = '".$post_statusname."'";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $punchitem = "".$row['punchitems']."";
 $color = "".$row['color']."";
@@ -145,7 +145,7 @@ exit;
 }
 
 $query2 = "delete from ".$db_prefix."punchlist where punchitems = ('".$post_statusname."')";
-$result2 = mysql_query($query2);
+$result2 = mysqli_query($db, $query2);
 
 if ($post_in_out == '1') {
   $post_in_out = 'In';

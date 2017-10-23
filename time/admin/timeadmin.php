@@ -73,9 +73,9 @@ $row_count = 0;
 
 $query = "select jobname, displayname, email, groups, office, admin, reports, disabled from ".$db_prefix."jobs
           order by jobname";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $jobname = stripslashes("".$row['jobname']."");
 $displayname = stripslashes("".$row['displayname']."");

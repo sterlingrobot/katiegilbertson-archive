@@ -77,9 +77,9 @@ echo "          <td valign=top>\n";
 echo "            <br />\n";
 
 $query = "select * from ".$db_prefix."groups, ".$db_prefix."offices where officename = '".$get_office."' and groupname = '".$get_group."'";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $officename = "".$row['officename']."";
 $officeid = "".$row['officeid']."";
@@ -91,8 +91,8 @@ if (!isset($officename)) {echo "Dept name is not defined for this group.\n"; exi
 if (!isset($groupname)) {echo "Group name is not defined for this group.\n"; exit;}
 
 $query2 = "select * from ".$db_prefix."jobs where office = '".$get_office."' and groups = '".$get_group."'";
-$result2 = mysql_query($query2);
-@$user_cnt = mysql_num_rows($result2);
+$result2 = mysqli_query($db, $query2);
+@$user_cnt = mysqli_num_rows($result2);
 
 if ($user_cnt > 0) {
 echo "            <table class='table'>\n";
@@ -169,45 +169,45 @@ $user_cnt = $_POST['user_cnt'];
 
 if ((!empty($post_officename)) || (!empty($post_officeid)) || ($office_name != 'no_office_users')) {
 $query = "select * from ".$db_prefix."offices where officename = '".$post_officename."' and officeid = '".$post_officeid."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $officename = "".$row['officename']."";
 $officeid = "".$row['officeid']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 if ((!isset($officename)) || (!isset($officeid))) {echo "Dept name is not defined for this group.\n"; exit;}
 
 if ((!empty($post_groupname)) || (!empty($post_groupid)) || ($group_name != 'no_group_users')) {
 $query = "select * from ".$db_prefix."groups where groupname = '".$post_groupname."' and groupid = '".$post_groupid."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $groupname = "".$row['groupname']."";
 $groupid = "".$row['groupid']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 }
 if ((!isset($groupname)) || (!isset($groupid))) {echo "Group name is not defined for this group.\n"; exit;}
 
 if (!empty($office_name)) {
 $query = "select * from ".$db_prefix."offices where officename = '".$office_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_officename = "".$row['officename']."";
 $tmp_officeid = "".$row['officeid']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if ((!isset($tmp_officename)) || (!isset($tmp_officeid))) {echo "Dept name is not defined for this group.\n"; exit;}
 }
 
 if (!empty($group_name)) {
 $query = "select * from ".$db_prefix."groups where groupname = '".$group_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_groupname = "".$row['groupname']."";
 $tmp_groupid = "".$row['groupid']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if ((!isset($tmp_groupname)) || (!isset($tmp_groupid))) {echo "Group name is not defined for this group.\n"; exit;}
 }
 
@@ -219,8 +219,8 @@ if (isset($group_name_no_users)) {
 }
 
 $query = "select * from ".$db_prefix."jobs where office = '".$post_officename."' and groups = '".$post_groupname."'";
-$result = mysql_query($query);
-@$tmp_user_cnt = mysql_num_rows($result);
+$result = mysqli_query($db, $query);
+@$tmp_user_cnt = mysqli_num_rows($result);
 
 if ($user_cnt != $tmp_user_cnt) {echo "Posted user count does not equal actual user count for this group.\n"; exit;}
 
@@ -348,11 +348,11 @@ echo "              <tr><td width=30><input type='image' name='submit' value='De
 if ($user_cnt > '0') {
 $query4 = "update ".$db_prefix."jobs set office = ('".$office_name."'), groups = ('".$group_name."') where office = ('".$post_officename."') 
            and groups = ('".$post_groupname."')";
-$result4 = mysql_query($query4);
+$result4 = mysqli_query($db, $query4);
 }
 
 $query5 = "delete from ".$db_prefix."groups where groupid = '".$post_groupid."'";
-$result5 = mysql_query($query5);
+$result5 = mysqli_query($db, $query5);
 
 echo "              <tr><td>Group Name:</td><td align=left width=80%  
                       style='padding-left:20px;' class=table_rows>$post_groupname</td></tr>\n";

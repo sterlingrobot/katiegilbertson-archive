@@ -136,9 +136,9 @@ $string2 = strstr($post_statusname, "\"");
 
 if (empty($string)) {
 $query = "select punchitems from ".$db_prefix."punchlist where punchitems = '".$post_statusname."'";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 $dupe = '1';
 }
 }
@@ -234,7 +234,7 @@ exit;
 } else {
 
 $query = "insert into ".$db_prefix."punchlist (punchitems, color, in_or_out) values ('".$post_statusname."', '".$post_color."', '".$create_status."')";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
 echo "            <table class='table'>\n";
 echo "              <tr>\n";

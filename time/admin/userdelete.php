@@ -79,9 +79,9 @@ $get_user = addslashes($get_user);
 $row_count = 0;
 
 $query = "select * from ".$db_prefix."jobs where jobname = '".$get_user."' order by jobname";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $username = stripslashes("".$row['jobname']."");
 $displayname = stripslashes("".$row['displayname']."");
@@ -92,14 +92,14 @@ $admin = "".$row['admin']."";
 $reports = "".$row['reports']."";
 $time_admin = "".$row['time_admin']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 $get_user = stripslashes($get_user);
 
 // make sure you cannot delete the last admin user in the system!! //
 
 if (!empty($admin)) {
-  $admin_count = mysql_query("select jobname from ".$db_prefix."jobs where admin = '1'");
-  @$admin_count_rows = mysql_num_rows($admin_count);
+  $admin_count = mysqli_query($db, "select jobname from ".$db_prefix."jobs where admin = '1'");
+  @$admin_count_rows = mysqli_num_rows($admin_count);
   if (@$admin_count_rows == "1") {
     $evil = "1";
   }
@@ -181,8 +181,8 @@ $display_name = addslashes($display_name);
 
 if (!empty($post_username)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_username = "".$row['jobname']."";
 }
 if (!isset($tmp_username)) {echo "Something is fishy here.\n"; exit;}
@@ -190,8 +190,8 @@ if (!isset($tmp_username)) {echo "Something is fishy here.\n"; exit;}
 
 if (!empty($display_name)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."' and displayname = '".$display_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_display_name = "".$row['displayname']."";
 }
 if (!isset($tmp_display_name)) {echo "Something is fishy here.\n"; exit;}
@@ -199,8 +199,8 @@ if (!isset($tmp_display_name)) {echo "Something is fishy here.\n"; exit;}
 
 if (!empty($email_addy)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."' and email = '".$email_addy."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_email_addy = "".$row['email']."";
 }
 if (!isset($tmp_email_addy)) {echo "Something is fishy here.\n"; exit;}
@@ -208,8 +208,8 @@ if (!isset($tmp_email_addy)) {echo "Something is fishy here.\n"; exit;}
 
 if (!empty($office_name)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."' and office = '".$office_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_office_name = "".$row['office']."";
 }
 if (!isset($tmp_office_name)) {echo "Something is fishy here.\n"; exit;}
@@ -217,8 +217,8 @@ if (!isset($tmp_office_name)) {echo "Something is fishy here.\n"; exit;}
 
 if (!empty($group_name)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."' and groups = '".$group_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_group_name = "".$row['groups']."";
 }
 if (!isset($tmp_group_name)) {echo "Something is fishy here.\n"; exit;}
@@ -232,11 +232,11 @@ if ((isset($delete_data)) && ($delete_data != '1')) {echo "Something is fishy he
 // end post validation //
 
 $query2 = "delete from ".$db_prefix."jobs where jobname = ('".$post_username."')";
-$result2 = mysql_query($query2);
+$result2 = mysqli_query($db, $query2);
 
 if ($delete_data == "1") {
 $query3 = "delete from ".$db_prefix."info where fullname = ('".$post_username."')";
-$result3 = mysql_query($query3);
+$result3 = mysqli_query($db, $query3);
 }
 
 $post_username = stripslashes($post_username);

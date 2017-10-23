@@ -86,14 +86,14 @@ echo "      </table></td>\n";
 $get_user = addslashes($get_user);
 
 $query = "select * from ".$db_prefix."jobs where jobname = '".$get_user."' order by jobname";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $username = stripslashes("".$row['jobname']."");
 $displayname = stripslashes("".$row['displayname']."");
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 
 $get_user = stripslashes($get_user);
 
@@ -161,8 +161,8 @@ $post_displayname = addslashes($post_displayname);
 
 if (!empty($get_user)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$get_user."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_get_user = "".$row['jobname']."";
 }
 if (!isset($tmp_get_user)) {echo "Something is fishy here.\n"; exit;}
@@ -170,8 +170,8 @@ if (!isset($tmp_get_user)) {echo "Something is fishy here.\n"; exit;}
 
 if (!empty($post_username)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_username = "".$row['jobname']."";
 }
 if (!isset($tmp_username)) {echo "Something is fishy here.\n"; exit;}
@@ -179,8 +179,8 @@ if (!isset($tmp_username)) {echo "Something is fishy here.\n"; exit;}
 
 if (!empty($post_displayname)) {
 $query = "select * from ".$db_prefix."jobs where jobname = '".$post_username."' and displayname = '".$post_displayname."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_post_displayname = "".$row['displayname']."";
 }
 if (!isset($tmp_post_displayname)) {echo "Something is fishy here.\n"; exit;}
@@ -366,12 +366,12 @@ if ($final_username[$x] != $tmp_username) {echo "Something is fishy here.\n"; ex
 //if ((strlen($final_mysql_timestamp[$x]) != "10") || (!is_integer($final_mysql_timestamp[$x]))) {echo "Something is fishy here.\n"; exit;}
 
 $query_sel = "select * from ".$db_prefix."punchlist where punchitems = '".$final_inout[$x]."'";
-$result_sel = mysql_query($query_sel);
+$result_sel = mysqli_query($db, $query_sel);
 
-while ($row=mysql_fetch_array($result_sel)) {
+while ($row=mysqli_fetch_array($result_sel)) {
   $punchitems = "".$row['punchitems']."";
 }
-mysql_free_result($result_sel);
+mysqli_free_result($result_sel);
 if (!isset($punchitems)) {echo "Something is fishy here.\n"; exit;}
 
 $final_notes[$x] = preg_replace("/[^[:alnum:] \,\.\?-]/","",$final_notes[$x]);
@@ -379,8 +379,8 @@ $final_username[$x] = addslashes($final_username[$x]);
 
 $query5 = "select * from ".$db_prefix."info where (fullname = '".$final_username[$x]."') and (timestamp = '".$final_mysql_timestamp[$x]."') and
            (`inout` = '".$final_inout[$x]."') and (notes = '".$final_notes[$x]."')";
-$result5 = mysql_query($query5);
-@$tmp_num_rows = mysql_num_rows($result5);
+$result5 = mysqli_query($db, $query5);
+@$tmp_num_rows = mysqli_num_rows($result5);
 
 if ((isset($tmp_num_rows)) && (@$tmp_num_rows != '1')) {echo "Something is fishy here.\n"; exit;}
 
@@ -400,9 +400,9 @@ if ($tmp_time[$x] != $final_time[$x]) {echo "Something is fishy here.\n"; exit;}
 //if (!get_magic_quotes_gpc()) {$final_username[$x] = addslashes($final_username[$x]);}
 
 $query = "select * from ".$db_prefix."jobs where jobname = '".$final_username[$x]."'";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 $tmp_jobname_1 = stripslashes("".$row['jobname']."");
 $tmp_tstamp_1 = "".$row['tstamp']."";
 }
@@ -412,9 +412,9 @@ $tmp_tmp_username[$x] = stripslashes($final_username[$x]);
 if (($tmp_jobname_1 == $tmp_tmp_username[$x]) && ($tmp_tstamp_1 == $final_mysql_timestamp[$x])) {
 
 $query2 = "select * from ".$db_prefix."info where fullname = '".$final_username[$x]."' order by timestamp desc limit 1,1";
-$result2 = mysql_query($query2);
+$result2 = mysqli_query($db, $query2);
 
-while ($row2=mysql_fetch_array($result2)) {
+while ($row2=mysqli_fetch_array($result2)) {
 $tmp_jobname_2 = stripslashes("".$row2['fullname']."");
 $tmp_jobname_2 = addslashes($tmp_jobname_2);
 $tmp_tstamp_2 = "".$row2['timestamp']."";
@@ -422,24 +422,24 @@ $tmp_tstamp_2 = "".$row2['timestamp']."";
 
 $query3 = "update ".$db_prefix."jobs set jobname = '".$tmp_jobname_2."', tstamp = '".$tmp_tstamp_2."'
            where jobname = '".$tmp_jobname_2."'";
-$result3 = mysql_query($query3);
+$result3 = mysqli_query($db, $query3);
 }
 
 // delete the time from the info table for $post_username
 
 $query4 = "delete from ".$db_prefix."info where fullname = '".$final_username[$x]."' and timestamp = '".$final_mysql_timestamp[$x]."'";
-$result4 = mysql_query($query4);
+$result4 = mysqli_query($db, $query4);
 
 // add the results to the audit table
 
 if (strtolower($ip_logging) == "yes") {
 $query6 = "insert into ".$db_prefix."audit (modified_by_ip, modified_by_user, modified_when, modified_from, modified_to, modified_why, user_modified) values
            ('".$connecting_ip."', '".$user."', '".$time_tz_stamp."', '".$final_mysql_timestamp[$x]."', '0', '".$post_why."', '".$final_username[$x]."')";
-$result6 = mysql_query($query6);
+$result6 = mysqli_query($db, $query6);
 } else {
 $query6 = "insert into ".$db_prefix."audit (modified_by_user, modified_when, modified_from, modified_to, modified_why, user_modified) values
            ('".$user."', '".$time_tz_stamp."', '".$final_mysql_timestamp[$x]."', '0', '".$post_why."', '".$final_username[$x]."')";
-$result6 = mysql_query($query6);
+$result6 = mysqli_query($db, $query6);
 }
 
 echo "              <tr class=display_row height=20>\n";
@@ -477,14 +477,14 @@ $post_username = addslashes($post_username);
 
 $query = "select * from ".$db_prefix."info where (fullname = '".$post_username."') and ((timestamp < '".$calc."') and (timestamp >= '".$timestamp."'))
           order by timestamp asc";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
 $username = array();
 $inout = array();
 $notes = array();
 $mysql_timestamp = array();
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $time_set = '1';
 $username[] = "".$row['fullname']."";
@@ -492,7 +492,7 @@ $inout[] = "".$row['inout']."";
 $notes[] = "".$row['notes']."";
 $mysql_timestamp[] = "".$row['timestamp']."";
 }
-$num_rows = mysql_num_rows($result);
+$num_rows = mysqli_num_rows($result);
 
 $post_username = stripslashes($post_username);
 
@@ -575,14 +575,14 @@ $post_displayname = addslashes($post_displayname);
 
 $query = "select * from ".$db_prefix."info where (fullname = '".$post_username."') and ((timestamp < '".$calc."') and (timestamp >= '".$timestamp."'))
           order by timestamp asc";
-$result = mysql_query($query);
+$result = mysqli_query($db, $query);
 
 $username = array();
 $inout = array();
 $notes = array();
 $mysql_timestamp = array();
 
-while ($row=mysql_fetch_array($result)) {
+while ($row=mysqli_fetch_array($result)) {
 
 $time_set = '1';
 $username[] = "".$row['fullname']."";
@@ -590,7 +590,7 @@ $inout[] = "".$row['inout']."";
 $notes[] = "".$row['notes']."";
 $mysql_timestamp[] = "".$row['timestamp']."";
 }
-$num_rows = mysql_num_rows($result);
+$num_rows = mysqli_num_rows($result);
 }
 
 $post_username = stripslashes($post_username);

@@ -188,21 +188,21 @@ $evil_input = "1";
 
 if (!empty($office_name)) {
 $query = "select * from ".$db_prefix."offices where officename = '".$office_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_officename = "".$row['officename']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($tmp_officename)) {echo "Dept is not defined.\n"; exit;}
 }
 
 if (!empty($group_name)) {
 $query = "select * from ".$db_prefix."groups where groupname = '".$group_name."'";
-$result = mysql_query($query);
-while ($row=mysql_fetch_array($result)) {
+$result = mysqli_query($db, $query);
+while ($row=mysqli_fetch_array($result)) {
 $tmp_groupname = "".$row['groupname']."";
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 if (!isset($tmp_officename)) {echo "Group is not defined.\n"; exit;}
 }
 
@@ -267,19 +267,19 @@ $tmp_var2 = "Jobname";
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where jobname LIKE '%".$post_username."%' and office = '".$office_name."' and groups = '".$group_name."'
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
   elseif (!empty($office_name)) {
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where jobname LIKE '%".$post_username."%' and office = '".$office_name."'
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
   elseif (empty($office_name)) {
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where jobname LIKE '%".$post_username."%' 
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
 }
 
@@ -291,19 +291,19 @@ $tmp_var2 = "Display Name";
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where displayname LIKE '%".$display_name."%' and office = '".$office_name."' and groups = '".$group_name."'
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
   elseif (!empty($office_name)) {
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where displayname LIKE '%".$display_name."%' and office = '".$office_name."'
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
   elseif (empty($office_name)) {
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where displayname LIKE '%".$display_name."%' 
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
 }
 
@@ -315,19 +315,19 @@ $tmp_var2 = "Email Address";
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where email LIKE '%".$email_addy."%' and office = '".$office_name."' and groups = '".$group_name."'
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
   elseif (!empty($office_name)) {
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where email LIKE '%".$email_addy."%' and office = '".$office_name."'
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
   elseif (empty($office_name)) {
   $query4 = "select jobname, displayname, email, groups, office, admin, reports, time_admin, disabled from ".$db_prefix."jobs
             where email LIKE '%".$email_addy."%' 
             order by jobname";
-  $result4 = mysql_query($query4);
+  $result4 = mysqli_query($db, $query4);
   } 
 }
 
@@ -335,11 +335,11 @@ $tmp_var = stripslashes($tmp_var);
 $tmp_var2 = stripslashes($tmp_var2);
 $row_count = "0";
 
-while ($row=mysql_fetch_array($result4)) {
+while ($row=mysqli_fetch_array($result4)) {
 
-@$user_count_rows = mysql_num_rows($user_count);
-@$admin_count_rows = mysql_num_rows($admin_count);
-@$reports_count_rows = mysql_num_rows($reports_count);
+@$user_count_rows = mysqli_num_rows($user_count);
+@$admin_count_rows = mysqli_num_rows($admin_count);
+@$reports_count_rows = mysqli_num_rows($reports_count);
 
 $row_count++;
 
@@ -417,7 +417,7 @@ echo "                <td>
                     <img border=0 src='../images/icons/delete.png' /></td>\n";
 echo "              </tr>\n";
 }
-mysql_free_result($result4);
+mysqli_free_result($result4);
 
 if ($row_count == "0") {
 
