@@ -14,9 +14,9 @@ if (isset($_POST['login_userid']) && (isset($_POST['login_password']))) {
 
     $query = "select jobname, employee_passwd, reports from ".$db_prefix."jobs
               where jobname = '".$login_userid."'";
-    $result = mysql_query($query);
+    $result = mysqli_query($db, $query);
 
-    while ($row=mysql_fetch_array($result)) {
+    while ($row=mysqli_fetch_array($result)) {
 
         $reports_username = "".$row['jobname']."";
         $reports_password = "".$row['employee_passwd']."";

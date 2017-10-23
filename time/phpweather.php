@@ -4,9 +4,9 @@ include 'config.inc.php';
 if ($display_weather == "yes") {
 
 	/* Make a connection to the MySQL database: */
-	$conn = mysql_pconnect($db_hostname, $db_username, $db_password);
+	$conn = mysqli_pconnect($db_hostname, $db_username, $db_password);
 	if ($conn) {
-	  mysql_select_db($db_name, $conn);
+	  mysqli_select_db($db_name, $conn);
 	} else {
 	  echo "<p>Unable to connect to MySQL database!</p>";
 	}
@@ -149,10 +149,10 @@ function get_metar($station, $always_use_cache = 0) {
   global $conn, $dbmMetar, $dbmTimestamp;
 
     $query = "SELECT metar, timestamp FROM ".$db_prefix."metars WHERE station = '$station'";
-    $result = mysql_query($query, $conn);
-    @$metar_rows = mysql_num_rows($result); /* this suppresses a php error message if the metars db has not yet been created. */
+    $result = mysqli_query($db, $query, $conn);
+    @$metar_rows = mysqli_num_rows($result); /* this suppresses a php error message if the metars db has not yet been created. */
     if (isset($metar_rows)) { /* found station */
-      list($metar, $timestamp) = mysql_fetch_row($result);
+      list($metar, $timestamp) = mysqli_fetch_row($result);
     }
   if (isset($metar)) { /* found station */
     if ($always_use_cache || $timestamp > time() - 3600) {
@@ -235,7 +235,7 @@ function fetch_metar($station, $new) {
       $query = "UPDATE ".$db_prefix."metars SET metar = '$metar', " .
         "timestamp = '$date_unixtime' WHERE station = '$station'";
     }
-    mysql_query($query, $conn);
+    mysqli_query($db, $query, $conn);
 
   return $metar;
 }
