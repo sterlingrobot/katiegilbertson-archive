@@ -26,9 +26,8 @@ if ($restrict_ips == "yes") {
 
 // check for correct db version //
 
-@ $db = mysqli_pconnect($db_hostname, $db_username, $db_password);
+@ $db = mysqli_connect('p:' . $db_hostname, $db_username, $db_password, $db_name);
 if (!$db) {echo "Error: Could not connect to the database. Please try again later."; exit;}
-mysqli_select_db($db_name);
 
 $table = "dbversion";
 $result = mysqli_query($db, "SHOW TABLES LIKE '".$db_prefix.$table."'");

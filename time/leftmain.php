@@ -272,6 +272,7 @@ if ($show_display_name == "yes") {
     }
 
     echo "              </select>
+                        <button class='addproject'>&plus;</button>
 					  </div>\n";
     mysqli_free_result($emp_name_result);
 
@@ -294,6 +295,7 @@ if ($show_display_name == "yes") {
     }
 
     echo "              </select>
+                        <button class='addproject'>&plus;</button>
 					  </div>\n";
     mysqli_free_result($emp_name_result);
 }

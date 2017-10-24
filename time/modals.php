@@ -103,5 +103,14 @@
   </div>
 </div><!-- /.modal -->
 
+<!-- Modal -->
+<div class="modal fade" id="quickAddProjectModal" tabindex="-1" role="dialog" aria-labelledby="quickAddProjectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div id="qAddProjectBody" class="modal-body" style="padding: 0; height: 90%;"> </div>
+	</div>
+  </div>
+</div><!-- /.modal -->
+
 
 

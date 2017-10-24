@@ -26,7 +26,7 @@ if ($restrict_ips == "yes") {
 
 // check for correct db version //
 
-@ $db = mysqi_connect('p:' . $db_hostname, $db_username, $db_password, $db_name);
+@ $db = mysqli_connect('p:' . $db_hostname, $db_username, $db_password, $db_name);
 if (!$db) {echo "Error: Could not connect to the database. Please try again later."; exit;}
 
 $table = "dbversion";

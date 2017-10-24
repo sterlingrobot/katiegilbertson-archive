@@ -937,7 +937,7 @@ if($request == 'GET') {
 	  $jobs_displayname[$x] = stripslashes($jobs_displayname[$x]);
 
 	  for($y = 0; $y < $info_cnt; $y++) {
-
+        $took_lunch = false;
 //      $info_date[] = date($datefmt, $info_timestamp[$y]);
 		$x_info_date[] = date($datefmt, $info_timestamp[$y]);
 		$info_date[] = date('n/j/y', $info_timestamp[$y]);

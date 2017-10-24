@@ -27,25 +27,24 @@
 
 // check for correct db version //
 
-  @ $db = mysqli_pconnect($db_hostname, $db_username, $db_password);
+  $db = mysqli_connect('p:' . $db_hostname, $db_username, $db_password, $db_name);
   if(!$db) {
 	echo "Error: Could not connect to the database. Please try again later.";
 	exit;
   }
-  mysqli_select_db($db_name);
 
   $table = "dbversion";
   $result = mysqli_query($db, "SHOW TABLES LIKE '" . $db_prefix . $table . "'");
-  @$rows = mysqli_num_rows($result);
-  if($rows == "1") {
+  $rows = mysqli_num_rows($result);
+  if($rows > 0) {
 	$dbexists = "1";
   } else {
 	$dbexists = "0";
   }
 
   $db_version_result = mysqli_query($db, "select * from " . $db_prefix . "dbversion");
-  while(@$row = mysqli_fetch_array($db_version_result)) {
-	@$my_dbversion = "" . $row["dbversion"] . "";
+  while($row = mysqli_fetch_array($db_version_result)) {
+	$my_dbversion = "" . $row["dbversion"] . "";
   }
 
 // include css and timezone offset//

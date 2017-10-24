@@ -73,6 +73,9 @@ if ($use_client_tz == "yes") {
   .row { margin-left: -10px; margin-right: -10px;}
   .col-sm-6.stock { padding-left: 5px; padding-right: 5px; }
   .calendar { margin-bottom: 3px; }
+  #name_entry { width:calc(100% - 65px); display:inline-block; }
+  .addproject { background: #39b3d7; color: #FFF; border:0; border-radius: 5px; font-size: 3em; width: 50px; height: 50px; line-height:0; margin-left:10px;transform:translateY(10px);}
+  .addproject:focus { outline:none; }
   #project_done {font: 2.5em Lora; font-weight: bold; padding: 5px;}
   #header, #wrapper { margin-left: 0; margin-right: 0; }
   #header h3 {  margin: 0; height: 40px;}
@@ -81,6 +84,10 @@ if ($use_client_tz == "yes") {
   #projects .project_labels { width: 70px; height: 40px; }
   #projects .project_label { padding: 0 4px; border-radius: 3px; font-size: 0.7em; font-weight: bold; display: block; width: 60px; margin: 1px 0; }
   #projects .project_name { display: block; margin-left: 75px; }
+  form[name="form"] tbody tr:nth-child(7),
+  form[name="form"] tbody tr:nth-child(8),
+  form[name="form"] tbody tr:nth-child(9),
+  form[name="form"] tbody tr:nth-child(10) { display: none; }
 </style>
 
 <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
@@ -109,6 +116,44 @@ if ($use_client_tz == "yes") {
 		  $('#calendarModal').modal();
 
 	  });
+      $('.addproject').on('click', function (e) {
+            e.preventDefault();
+            $.get('admin/usercreate.php')
+                .done(function(data) {
+
+                    $('#qAddProjectBody').html($(data).find('#addproject'));
+                    $('#quickAddProjectModal').modal();
+
+                    formModal();
+             });
+      });
+
+      function formModal() {
+        var $form = $('form[name="form"]');
+
+        if(document.form && document.form.office_name) office_names();
+
+        $('a[href*="useradmin"]').on('click', function(e) {
+            e.preventDefault();
+            $('#quickAddProjectModal').modal('hide');
+        });
+        $('a[href*="usercreate"]').on('click', function(e) {
+            e.preventDefault();
+            refresh();
+        });
+
+        $form.on('submit', function(e) {
+            e.preventDefault();
+            var formdata = $form.serialize();
+            $.post($form[0].action, formdata)
+                .done(function(data) {
+                    $('#qAddProjectBody').html($(data).find('#addproject'));
+                    formModal();
+                });
+        });
+      }
+
+
 	  $('.report').on('click', function (e) {
 		e.preventDefault();
 //		console.log(JSON.stringify(rpoptions));

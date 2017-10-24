@@ -50,7 +50,8 @@ echo "        <tr><td><a class='btn btn-default' href='sysedit.php'><img src='..
 echo "        <tr><td><a class='btn btn-default' href='dbupgrade.php'><img src='../images/icons/database_go.png' alt='Upgrade Database' />&nbsp;&nbsp;&nbsp;Upgrade Database</a></td></tr>\n";
 echo "      </table></td>\n";
 echo "    <td align=left class=right_main scope=col>\n";
-echo "      <table class='table'>\n";
+echo "      <table id='addproject' class='table'>\n";
+              include '../scripts/dropdown_get.php';
 echo "        <tr class=right_main_text>\n";
 echo "          <td valign=top>\n";
 echo "            <br />\n";
@@ -66,14 +67,14 @@ echo "              <tr><td>Jobname:</td><td colspan=2 width=80%
 echo "              <tr><td>Display Name:</td><td colspan=2 width=80%
                       style='color:red;font-family:Tahoma;;padding-left:20px;'>
                       <input type='text' size='25' maxlength='50' name='display_name'>&nbsp;*</td></tr>\n";
-echo "              <tr><td>Password:</td><td colspan=2 width=80%
-                      style='padding-left:20px;'><input type='password' size='25' maxlength='25' name='password'></td></tr>\n";
-echo "              <tr><td>Confirm Password:</td><td colspan=2 width=80%
-                      style='padding-left:20px;'>
-                      <input type='password' size='25' maxlength='25' name='confirm_password'></td></tr>\n";
-echo "              <tr><td>Email Address:</td><td colspan=2 width=80%
-                      style='color:red;font-family:Tahoma;;padding-left:20px;'>
-                      <input type='text' size='25' maxlength='75' name='email_addy'>&nbsp;</td></tr>\n";
+// echo "              <tr><td>Password:</td><td colspan=2 width=80%
+//                       style='padding-left:20px;'><input type='password' size='25' maxlength='25' name='password'></td></tr>\n";
+// echo "              <tr><td>Confirm Password:</td><td colspan=2 width=80%
+//                       style='padding-left:20px;'>
+//                       <input type='password' size='25' maxlength='25' name='confirm_password'></td></tr>\n";
+// echo "              <tr><td>Email Address:</td><td colspan=2 width=80%
+//                       style='color:red;font-family:Tahoma;;padding-left:20px;'>
+//                       <input type='text' size='25' maxlength='75' name='email_addy'>&nbsp;</td></tr>\n";
 echo "              <tr><td>Dept:</td><td colspan=2 width=80%
                       style='color:red;font-family:Tahoma;;padding-left:20px;'>
                       <select name='office_name' onchange='group_names();'>\n";
@@ -109,9 +110,9 @@ include 'header_post.php'; include 'topmain.php';
 
 $post_username = stripslashes($_POST['post_username']);
 $display_name = stripslashes($_POST['display_name']);
-$password = $_POST['password'];
-$confirm_password = $_POST['confirm_password'];
-$email_addy = $_POST['email_addy'];
+$password = isset($_POST['password']) ? $_POST['password'] : '';
+$confirm_password = isset($_POST['confirm_password']) ?  $_POST['confirm_password'] : '';
+$email_addy = isset($_POST['email_addy']) ?  $_POST['email_addy'] : '';
 $office_name = $_POST['office_name'];
 @$group_name = $_POST['group_name'];
 $admin_perms = $_POST['admin_perms'];
@@ -177,7 +178,8 @@ echo "        <tr><td><a class='btn btn-default' href='sysedit.php'><img src='..
 echo "        <tr><td><a class='btn btn-default' href='dbupgrade.php'><img src='../images/icons/database_go.png' alt='Upgrade Database' />&nbsp;&nbsp;&nbsp;Upgrade Database</a></td></tr>\n";
 echo "      </table></td>\n";
 echo "    <td align=left class=right_main scope=col>\n";
-echo "      <table class='table'>\n";
+echo "      <table id='addproject' class='table'>\n";
+              include '../scripts/dropdown_get.php';
 echo "        <tr class=right_main_text>\n";
 echo "          <td valign=top>\n";
 echo "            <br />\n";
@@ -351,14 +353,14 @@ echo "              <tr><td>Display Name:</td><td colspan=2 width=80%
 if (!empty($string)) {$post_username = addslashes($post_username);}
 if (!empty($string2)) {$displayname = addslashes($display_name);}
 
-echo "              <tr><td>Password:</td><td colspan=2 width=80%
-                      style='padding-left:20px;'><input type='password' size='25' maxlength='25' name='password'></td></tr>\n";
-echo "              <tr><td>Confirm Password:</td><td colspan=2 width=80%
-                      style='padding-left:20px;'>
-                      <input type='password' size='25' maxlength='25' name='confirm_password'></td></tr>\n";
-echo "              <tr><td>Email Address:</td><td colspan=2 width=80%
-                      style='color:red;font-family:Tahoma;font-size:11px;padding-left:20px;'>
-                      <input type='text' size='25' maxlength='75' name='email_addy' value=\"$email_addy\">&nbsp;</td></tr>\n";
+// echo "              <tr><td>Password:</td><td colspan=2 width=80%
+//                       style='padding-left:20px;'><input type='password' size='25' maxlength='25' name='password'></td></tr>\n";
+// echo "              <tr><td>Confirm Password:</td><td colspan=2 width=80%
+//                       style='padding-left:20px;'>
+//                       <input type='password' size='25' maxlength='25' name='confirm_password'></td></tr>\n";
+// echo "              <tr><td>Email Address:</td><td colspan=2 width=80%
+//                       style='color:red;font-family:Tahoma;font-size:11px;padding-left:20px;'>
+//                       <input type='text' size='25' maxlength='75' name='email_addy' value=\"$email_addy\">&nbsp;</td></tr>\n";
 echo "              <tr><td>Dept:</td><td colspan=2 width=80%
                       style='color:red;font-family:Tahoma;;padding-left:20px;'>
                       <select name='office_name' onchange='group_names();'>\n";
@@ -450,7 +452,8 @@ echo "        <tr><td><a class='btn btn-default' href='sysedit.php'><img src='..
 echo "        <tr><td><a class='btn btn-default' href='dbupgrade.php'><img src='../images/icons/database_go.png' alt='Upgrade Database' />&nbsp;&nbsp;&nbsp;Upgrade Database</a></td></tr>\n";
 echo "      </table></td>\n";
 echo "    <td align=left class=right_main scope=col>\n";
-echo "      <table class='table'>\n";
+echo "      <table id='addproject' class='table'>\n";
+              include '../scripts/dropdown_get.php';
 echo "        <tr class=right_main_text>\n";
 echo "          <td valign=top>\n";
 echo "            <br />\n";
@@ -489,10 +492,10 @@ echo "              <tr><td>Jobname:</td><td align=left class=table_rows
                       colspan=2 width=80% style='padding-left:20px;'>$username</td></tr>\n";
 echo "              <tr><td>Display Name:</td><td align=left class=table_rows
                       colspan=2 width=80% style='padding-left:20px;'>$displayname</td></tr>\n";
-echo "              <tr><td>Password:</td><td align=left class=table_rows
-                      colspan=2 width=80% style='padding-left:20px;'>***hidden***</td></tr>\n";
-echo "              <tr><td>Email Address:</td><td align=left class=table_rows
-                      colspan=2 width=80% style='padding-left:20px;'>$user_email</td></tr>\n";
+// echo "              <tr><td>Password:</td><td align=left class=table_rows
+//                       colspan=2 width=80% style='padding-left:20px;'>***hidden***</td></tr>\n";
+// echo "              <tr><td>Email Address:</td><td align=left class=table_rows
+//                       colspan=2 width=80% style='padding-left:20px;'>$user_email</td></tr>\n";
 echo "              <tr><td>Dept:</td><td align=left class=table_rows
                       colspan=2 width=80% style='padding-left:20px;'>$office</td></tr>\n";
 echo "              <tr><td>Group:</td><td align=left class=table_rows
