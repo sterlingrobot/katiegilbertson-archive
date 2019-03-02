@@ -22,7 +22,7 @@ if ($request == 'POST'){
         if (isset($displayname)) {
             $displayname = addslashes($displayname);
             $query = "select displayname from ".$db_prefix."jobs where displayname = '".$displayname."'";
-            $emp_name_result = mysqli_query($query);
+            $emp_name_result = mysqli_query($db, $query);
 
             while ($row = mysqli_fetch_assoc($emp_name_result)) {
                 $tmp_displayname = "".$row['displayname']."";
@@ -88,7 +88,7 @@ if ($request == 'POST') {
     }
 
     $query = "select punchitems from ".$db_prefix."punchlist";
-    $punchlist_result = mysqli_query($query);
+    $punchlist_result = mysqli_query($db, $query);
 
     while ($row = mysqli_fetch_assoc($punchlist_result)) {
         $tmp_inout = "".$row['punchitems']."";
@@ -154,7 +154,7 @@ if ($request == 'POST') {
 			if ($show_display_name == "yes") {
 
 				$sel_query = "select jobname from ".$db_prefix."jobs where displayname = '".$displayname."'";
-				$sel_result = mysqli_query($sel_query);
+				$sel_result = mysqli_query($db, $sel_query);
 
 				while ($row=mysqli_fetch_assoc($sel_result)) {
 					$fullname = stripslashes("".$row["jobname"]."");

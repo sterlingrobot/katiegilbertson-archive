@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 
 include 'functions.php';
 //ob_start();
@@ -30,17 +31,17 @@ if ($restrict_ips == "yes") {
 
 // connect to db anc check for correct db version //
 
-@ $db = mysqli_connect('p:' .$db_hostname, $db_username, $db_password, $db_name);
+$db = mysqli_connect('p:' .$db_hostname, $db_username, $db_password, $db_name);
 if (!$db) {echo "Error: Could not connect to the database. Please try again later."; exit;}
 
 $table = "dbversion";
 $result = mysqli_query($db, "SHOW TABLES LIKE '".$db_prefix.$table."'");
 
-if ($result) {
+// if ($result) {
     $dbexists = "1";
-} else {
-    $dbexists = "0";
-}
+// } else {
+//     $dbexists = "0";
+// }
 
 $db_version_result = mysqli_query($db, "select * from ".$db_prefix."dbversion");
 while (@$row = mysqli_fetch_assoc($db_version_result)) {

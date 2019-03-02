@@ -3,11 +3,10 @@
 include '../config.inc.php';
 include '../functions.php';
 
-@$db = mysqli_pconnect($db_hostname, $db_username, $db_password);
+@$db = mysqli_connect($db_hostname, $db_username, $db_password, $db_name);
 if (!$db) {echo "Error: Could not connect to the database. Please try again later."; exit;}
-mysqli_select_db($db_name);
 
-if (($_GET['rpt'] == 'timerpt') && (isset($_GET['display_ip'])) && (isset($_GET['csv'])) && (isset($_GET['office'])) && (isset($_GET['group'])) && 
+if (($_GET['rpt'] == 'timerpt') && (isset($_GET['display_ip'])) && (isset($_GET['csv'])) && (isset($_GET['office'])) && (isset($_GET['group'])) &&
 (isset($_GET['fullname'])) && (isset($_GET['from'])) && (isset($_GET['to'])) && (isset($_GET['tzo']))) {
 
 $tmp_display_ip = $_GET['display_ip'];
@@ -43,19 +42,19 @@ if (strtolower($user_or_display) == "display") {
 
     } elseif ((empty($office_name)) && (empty($group_name)) && ($fullname != 'All')) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by
                   displayname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name == "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by
                   displayname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name != "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and
                   tstamp IS NOT NULL order by displayname asc";
         $result = mysqli_query($db, $query);
 
@@ -80,19 +79,19 @@ if (strtolower($user_or_display) == "display") {
 
     } elseif ((empty($office_name)) && (empty($group_name)) && ($fullname != 'All')) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by
                   jobname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name == "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by
                   jobname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name != "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and
                   tstamp IS NOT NULL order by jobname asc";
         $result = mysqli_query($db, $query);
 
@@ -129,11 +128,11 @@ for ($x=0;$x<$jobs_cnt;$x++) {
         $jobs_jobname[$x] = addslashes($jobs_jobname[$x]);
         $jobs_displayname[$x] = addslashes($jobs_displayname[$x]);
 
-        $query = "select ".$db_prefix."info.fullname, ".$db_prefix."info.`inout`, ".$db_prefix."info.timestamp, ".$db_prefix."info.notes, 
+        $query = "select ".$db_prefix."info.fullname, ".$db_prefix."info.`inout`, ".$db_prefix."info.timestamp, ".$db_prefix."info.notes,
                   ".$db_prefix."info.ipaddress, ".$db_prefix."punchlist.in_or_out, ".$db_prefix."punchlist.punchitems, ".$db_prefix."punchlist.color
                   from ".$db_prefix."info, ".$db_prefix."punchlist, ".$db_prefix."jobs
-                  where ".$db_prefix."info.fullname like '".$jobs_jobname[$x]."' 
-                  and ".$db_prefix."info.timestamp >= '".$from_timestamp."' and ".$db_prefix."info.timestamp <= '".$to_timestamp."' 
+                  where ".$db_prefix."info.fullname like '".$jobs_jobname[$x]."'
+                  and ".$db_prefix."info.timestamp >= '".$from_timestamp."' and ".$db_prefix."info.timestamp <= '".$to_timestamp."'
                   and ".$db_prefix."info.`inout` = ".$db_prefix."punchlist.punchitems
                   and ".$db_prefix."jobs.jobname = '".$jobs_jobname[$x]."'
                   order by ".$db_prefix."info.timestamp asc";
@@ -171,7 +170,7 @@ for ($x=0;$x<$jobs_cnt;$x++) {
             } else {
               if (!empty($tmp_display_ip)) {
                 $string .= "$jobname, $inout, $time, $date, $ipaddress, $notes,\n";
-              } else {   
+              } else {
                 $string .= "$jobname, $inout, $time, $date, $notes,\n";
               }
            }
@@ -185,7 +184,7 @@ header("Expires: 0");
 echo "$headings$string";
 
 } elseif (($_GET['rpt'] == 'hrs_wkd') && (isset($_GET['display_ip'])) && (isset($_GET['csv'])) && (isset($_GET['office'])) && (isset($_GET['group'])) &&
-(isset($_GET['fullname'])) && (isset($_GET['from'])) && (isset($_GET['to'])) && (isset($_GET['tzo'])) && (isset($_GET['paginate'])) && 
+(isset($_GET['fullname'])) && (isset($_GET['from'])) && (isset($_GET['to'])) && (isset($_GET['tzo'])) && (isset($_GET['paginate'])) &&
 (isset($_GET['round'])) && (isset($_GET['details'])) && (isset($_GET['rpt_run_on'])) && (isset($_GET['rpt_date'])) && (isset($_GET['from_date']))) {
 
 $tmp_display_ip = $_GET['display_ip'];
@@ -241,19 +240,19 @@ if (strtolower($user_or_display) == "display") {
 
     } elseif ((empty($office_name)) && (empty($group_name)) && ($fullname != 'All')) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by
                   displayname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name == "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by
                   displayname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name != "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and
                   tstamp IS NOT NULL order by displayname asc";
         $result = mysqli_query($db, $query);
 
@@ -279,19 +278,19 @@ if (strtolower($user_or_display) == "display") {
 
     } elseif ((empty($office_name)) && (empty($group_name)) && ($fullname != 'All')) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs WHERE tstamp IS NOT NULL and jobname = '".$fullname."' order by
                   jobname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name == "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and tstamp IS NOT NULL order by
                   jobname asc";
         $result = mysqli_query($db, $query);
 
     } elseif (($office_name != "All") && ($group_name != "All") && ($fullname == "All")) {
 
-        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and 
+        $query = "select jobname, displayname from ".$db_prefix."jobs where office = '".$office_name."' and groups = '".$group_name."'  and
                   tstamp IS NOT NULL order by jobname asc";
         $result = mysqli_query($db, $query);
 
@@ -313,12 +312,12 @@ while ($row=mysqli_fetch_array($result)) {
 
 if ($tmp_show_details == "1") {
     if (!empty($tmp_display_ip)) {
-        $headings = "Name, In/Out, Time, Date, IP Address, Notes, Daily Totals, Employee Totals,\n";
+        $headings = "Name, In/Out, Time, Date, IP Address, Notes, Daily Totals, Job Totals,\n";
     } else {
-        $headings = "Name, In/Out, Time, Date, Notes, Daily Totals, Employee Totals,\n";
+        $headings = "Name, In/Out, Time, Date, Notes, Daily Totals, Job Totals,\n";
     }
 } else {
-    $headings = "Name, Date, Daily Totals, Employee Totals,\n";
+    $headings = "Name, Date, Daily Totals, Job Totals,\n";
 }
 $string = "";
 
@@ -330,11 +329,11 @@ for ($x=0;$x<$jobs_cnt;$x++) {
     $jobs_jobname[$x] = addslashes($jobs_jobname[$x]);
     $jobs_displayname[$x] = addslashes($jobs_displayname[$x]);
 
-    $query = "select ".$db_prefix."info.fullname, ".$db_prefix."info.`inout`, ".$db_prefix."info.timestamp, ".$db_prefix."info.notes, 
+    $query = "select ".$db_prefix."info.fullname, ".$db_prefix."info.`inout`, ".$db_prefix."info.timestamp, ".$db_prefix."info.notes,
               ".$db_prefix."info.ipaddress, ".$db_prefix."punchlist.in_or_out, ".$db_prefix."punchlist.punchitems, ".$db_prefix."punchlist.color
               from ".$db_prefix."info, ".$db_prefix."punchlist, ".$db_prefix."jobs
               where ".$db_prefix."info.fullname like ('".$jobs_jobname[$x]."') and ".$db_prefix."info.timestamp >= '".$from_timestamp."'
-              and ".$db_prefix."info.timestamp < '".$to_timestamp."' and ".$db_prefix."info.`inout` = ".$db_prefix."punchlist.punchitems 
+              and ".$db_prefix."info.timestamp < '".$to_timestamp."' and ".$db_prefix."info.`inout` = ".$db_prefix."punchlist.punchitems
               and ".$db_prefix."jobs.jobname = '".$jobs_jobname[$x]."'
               order by ".$db_prefix."info.timestamp asc";
     $result = mysqli_query($db, $query);
@@ -381,13 +380,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                               $time_formatted = date($timefmt, $info_timestamp[$z]);
                               if (strtolower($user_or_display) == "display") {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
-                                      } else {  
+                                      } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -395,13 +394,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                                   }
                               } else {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
                                       } else {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -457,13 +456,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                               $time_formatted = date($timefmt, $info_timestamp[$z]);
                               if (strtolower($user_or_display) == "display") {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
-                                      } else {  
+                                      } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -471,13 +470,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                                   }
                               } else {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
                                       } else {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -523,13 +522,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                           $time_formatted = date($timefmt, $info_timestamp[$z]);
                           if (strtolower($user_or_display) == "display") {
                               if (!empty($tmp_display_ip)) {
-                                  if ($z == $punch_cnt) {  
+                                  if ($z == $punch_cnt) {
                                       $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
-                                  } else {  
+                                  } else {
                                       $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                   }
                               } else {
-                                  if ($z == $punch_cnt) {  
+                                  if ($z == $punch_cnt) {
                                       $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_notes[$z], $hours, ,\n";
                                   } else {
                                       $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_notes[$z], , ,\n";
@@ -537,13 +536,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                               }
                           } else {
                               if (!empty($tmp_display_ip)) {
-                                  if ($z == $punch_cnt) {  
+                                  if ($z == $punch_cnt) {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
                                   } else {
                                   $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                   }
                               } else {
-                                  if ($z == $punch_cnt) {  
+                                  if ($z == $punch_cnt) {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_notes[$z], $hours, ,\n";
                                   } else {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$yy], $info_notes[$z], , ,\n";
@@ -584,13 +583,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                               $time_formatted = date($timefmt, $info_timestamp[$z]);
                               if (strtolower($user_or_display) == "display") {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
-                                      } else {  
+                                      } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -598,13 +597,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                                   }
                               } else {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
                                       } else {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -648,13 +647,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                               $time_formatted = date($timefmt, $info_timestamp[$z]);
                               if (strtolower($user_or_display) == "display") {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
-                                      } else {  
+                                      } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -662,13 +661,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                                   }
                               } else {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
                                       } else {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -716,13 +715,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                               $time_formatted = date($timefmt, $info_timestamp[$z]);
                               if (strtolower($user_or_display) == "display") {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
-                                      } else {  
+                                      } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -730,13 +729,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                                   }
                               } else {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
                                       } else {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -784,13 +783,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                               $time_formatted = date($timefmt, $info_timestamp[$z]);
                               if (strtolower($user_or_display) == "display") {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
-                                      } else {  
+                                      } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_displayname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";
@@ -798,13 +797,13 @@ for ($x=0;$x<$jobs_cnt;$x++) {
                                   }
                               } else {
                                   if (!empty($tmp_display_ip)) {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], $hours, ,\n";
                                       } else {
                                       $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_ipaddress[$z], $info_notes[$z], , ,\n";
                                       }
                                   } else {
-                                      if ($z == $punch_cnt) {  
+                                      if ($z == $punch_cnt) {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], $hours, ,\n";
                                       } else {
                                           $string .= "$jobs_jobname[$x], $info_inout[$z], $time_formatted, $info_date[$y], $info_notes[$z], , ,\n";

@@ -48,7 +48,7 @@ echo "      </table><br /></td></tr></table>\n"; exit;
 
 $get_user = stripslashes($_GET['username']);
 
-disabled_acct($get_user);
+// disabled_acct($get_user);
 
 echo "<table class='table'>\n";
 echo "  <tr valign=top>\n";

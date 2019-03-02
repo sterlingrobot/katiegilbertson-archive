@@ -48,7 +48,7 @@ echo "      </table><br /></td></tr></table>\n"; exit;
 
 $get_user = stripslashes($_GET['username']);
 
-disabled_acct($get_user);
+// disabled_acct($get_user);
 
 echo "<table class='table'>\n";
 echo "  <tr valign=top>\n";
@@ -335,7 +335,7 @@ while ($row=mysqli_fetch_array($result_sel)) {
 mysqli_free_result($result_sel);
 if (!isset($punchitems)) {echo "Something is fishy here.\n"; exit;}
 
-$final_notes[$x] = preg_replace("/[^[:alnum:] \,\.\?-]/$i","",$final_notes[$x]);
+$final_notes[$x] = preg_replace("/[^[:alnum:] \,\.\?-]/i","",$final_notes[$x]);
 $final_username[$x] = addslashes($final_username[$x]);
 
 $query5 = "select * from ".$db_prefix."info where (fullname = '".$final_username[$x]."') and (timestamp = '".$final_mysql_timestamp[$x]."') and

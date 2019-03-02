@@ -1,11 +1,28 @@
 <?php
+
+// if(isset($_REQUEST['proxy'])) {
+//   $context = array(
+//       'http' => array(
+//           'proxy' => strlen($_REQUEST['proxy']) ? $_REQUEST['proxy'] : 'www-proxy.us.oracle.com:80',
+//           'request_fulluri' => true
+//       )
+//   );
+//   stream_context_set_default($context);
+//   ini_set('allow_url_include', 1);
+
+//   $dbexists = 1;
+// }
+
 session_start();
 
 include 'config.inc.php';
 include 'header.php';
+
 echo "<title>$title</title>\n";
 echo "</head>";
 echo "<body>";
+
+
 $current_page = "timeclock.php";
 
 if (!isset($_GET['printer_friendly'])) {

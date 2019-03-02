@@ -87,7 +87,7 @@
             </div>
             <div id="news">
                 <a href="/p/indian-relay/editor/1">
-                    <img src="/includes/cache/4ab5026642f36e54b5ea5052371a90ed_w128_h128_cp_sc.jpg" width="55" height="55" />
+                    <img src="<?= resize(FS_ROOT . DIRECTORY_SEPARATOR . 'images/projects/Indian_Relay/main.jpg', array('w' => 55, 'h' => 55, 'crop' => true)) ?>" width="55" height="55" />
                     <h4>Indian Relay<br/>EMMY<sup>&reg;</sup> Winner!<br>Documentary - Cultural<br><small>NATAS Northwest</small></h4>
                 </a>
             </div>
