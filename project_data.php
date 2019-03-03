@@ -1,5 +1,5 @@
 <?php
-    ini_set('display_errors', 1);
+    // ini_set('display_errors', 1);
 
     require_once($_SERVER['DOCUMENT_ROOT'] . '/includes/configure.php');
     require_once('function.resize.php');
@@ -15,7 +15,7 @@
     $stmt->execute(array($project_id));
 
     $project = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     $main_desc = $project['description'];
     $subprojects_id = $project['subprojects_id'];
 
@@ -34,10 +34,12 @@
 
     $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+
 ?>
 
 
-<?php    
+<?php
 
     if(isset($project['video_link'])) :
             $video_link = $project['video_link'];
@@ -166,10 +168,19 @@
 
             $url = "/p/" . GenerateUrl($sibling['name']). DIRECTORY_SEPARATOR . GenerateUrl($sibling['role']) .  DIRECTORY_SEPARATOR . $sibling['id'];
 
-            $src = (file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $sibling['id'] . '.jpg'))? resize(ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $sibling['id'] . '.jpg',$settings) : '/css/images/1px_spacer.gif' ;
+            $src = (file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $sibling['id'] . '.jpg')) ?
+                resize( DIRECTORY_SEPARATOR . $project['images_folder'] . '/main_' . $sibling['id'] . '.jpg',$settings) :
+                '/css/images/1px_spacer.gif' ;
 
 ?>
-            <div class="subproject_item" id="project_id_<?=$sibling['id']; ?>" class="project_item fadein fast"><a class="subproject" href="<?=$url?>" alt="<?=$sibling['name'] . ' (' . $sibling['date_completed']?>)" title="<?=$sibling['name'] . ' (' . $sibling['date_completed']?>)"><img src="<?=$src?>" border="0" /></a></div>
+            <div class="subproject_item" id="project_id_<?=$sibling['id']; ?>" class="project_item fadein fast">
+                <a class="subproject"
+                    href="<?=$url?>"
+                    alt="<?=$sibling['name'] . ' (' . $sibling['date_completed']?>)"
+                    title="<?=$sibling['name'] . ' (' . $sibling['date_completed']?>)">
+                    <img src="<?=$src?>" border="0" />
+                </a>
+            </div>
 
 <?php
         endforeach;
@@ -201,7 +212,7 @@
 
             <?php
         }
-    
+
 
     function convertUrlQuery($query) {
         $queryParts = explode('&', $query);

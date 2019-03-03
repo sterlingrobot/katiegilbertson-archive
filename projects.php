@@ -57,10 +57,10 @@ foreach($results as $project) :
         $stmt2->execute();
         $parent = $stmt2->fetch(PDO::FETCH_ASSOC);
 
-        if(!isset($projects[$parent[0]])) {
+        if(!isset($projects[$parent['projects_id']])) {
 
         } else {
-            $projects[$parent[0]]['subprojects'][] = $row;
+            $projects[$parent['projects_id']]['subprojects'][] = $project;
         }
     }
 
@@ -134,7 +134,9 @@ endif; ?>
 <?php
 if (isset($_GET['id'])): ?>
         <script type="text/javascript">
-            var t = setTimeout('loadData($(".project_item .image"), false)', 1000);
+            var t = setTimeout(function() {
+                loadData($(".project_item .image"), false);
+            }, 1000);
         </script>
 <?php
 endif; ?>
@@ -152,7 +154,7 @@ endif; ?>
                     <?php
 
     $img_settings = array('w' => 128, 'h' => 128, 'crop' => true);
-    
+
     foreach ($projects as $project) {
 
 ?>
@@ -170,7 +172,7 @@ endif; ?>
         elseif (file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main.jpg')) $img_src = resize(FS_ROOT . DIRECTORY_SEPARATOR . $project['images_folder'] . '/main.jpg', $img_settings);
 
 ?>
-                        <a href="<?php echo $url?>"><img class="image" src="<?php echo $img_src?> " /></a>
+                        <a href="<?php echo $url?>"><img class="image" src="<?php echo $img_src?>" /></a>
 <?php
 
     if ($project['social_links']): ?>
@@ -212,7 +214,7 @@ endif; ?>
                 <?php
 
     if ($project['awards']): ?>
-    
+
                         <div class="cycle-slideshow awards synopsis"
                                 data-cycle-fx="fade"
                                 data-cycle-speed="500">
@@ -238,7 +240,11 @@ endif; ?>
         $settings = array('w' => 50, 'h' => 50, 'crop' => true);
         foreach ($project['subprojects'] as $subproject) {
             $url = "/p/" . GenerateUrl($subproject['name']) . DIRECTORY_SEPARATOR . GenerateUrl($subproject['role']) . DIRECTORY_SEPARATOR . $subproject['id'];
-            $src = (file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $subproject['images_folder'] . '/main_' . $subproject['id'] . '.jpg')) ? resize(ROOT . DIRECTORY_SEPARATOR . $subproject['images_folder'] . '/main_' . $subproject['id'] . '.jpg', $settings) : '/css/images/1px_spacer.gif';
+            $src = (
+                file_exists(FS_ROOT . DIRECTORY_SEPARATOR . $subproject['images_folder'] . '/main_' . $subproject['id'] . '.jpg')) ?
+                    resize($subproject['images_folder'] . '/main_' . $subproject['id'] . '.jpg', $settings) :
+                    '/css/images/1px_spacer.gif';
+
 ?>
                                         <div class="subproject_item" id="project_id_<?php echo $subproject['id']; ?>" class="project_item fadein fast"><a class="subproject" href="<?php echo $url ?>" alt="<?php echo $subproject['name'] . ' (' . $subproject['date_completed'] ?>)" title="<?php echo $subproject['name'] . ' (' . $subproject['date_completed'] ?>)"><img src="<?php echo $src ?>" border="0" /></a></div>
                                     <?php

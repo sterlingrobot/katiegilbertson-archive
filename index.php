@@ -1,7 +1,7 @@
 <?php
-    ini_set('display_errors', '1');
+    // ini_set('display_errors', '1');
 
-    error_reporting(E_ERROR | E_WARNING | E_PARSE | E_COMPILE_ERROR);
+    // error_reporting(E_ERROR | E_WARNING | E_PARSE | E_COMPILE_ERROR);
 
     require('includes/configure.php');
     require('includes/function.resize.php');
@@ -66,13 +66,13 @@
         <script type="text/javascript">
             $(function() {
                 $('.fadein').css('visibility','hidden');
-                $('#nav').hide();
+                // $('#nav').hide();
                 (function shownext(jq){
                     jq.eq(0).css('visibility','visible').hide().fadeIn(1000, function(){
                         (jq=jq.slice(1)).length && shownext(jq);
                     });
                 })($('.fadein'))
-                setTimeout(function () { $('#nav').fadeIn(1000); }, 3000);
+                // setTimeout(function () { $('#nav').fadeIn(1000); }, 3000);
                 $('.awards').animate({ left : '-300em' }, 400000, 'linear');
             })
         </script>
